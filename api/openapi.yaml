@@ -1,0 +1,5261 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: contact@obslabs.io
+  description: |
+    # Authentication
+
+    ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.
+
+    Example usage:
+    ```bash
+    curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me
+    ```
+
+    # Errors
+
+    The API returns a structured error response in case of failure. Below is the format of the error response object:
+
+    ```json
+    {
+      "error": {
+        "status": 400,
+        "code": "VALIDATION",
+        "message": "Validation errors occurred.",
+        "details": [
+          {
+            "field": "email",
+            "issue": "The email address is not in a valid format."
+          },
+          {
+            "field": "password",
+            "issue": "The password must be at least 8 characters long."
+          }
+        ]
+      }
+    }
+  termsOfService: https://obslabs.io/terms-of-service
+  title: ObsLabs API
+  version: "1.0"
+  x-logo:
+    url: https://obslabs.io/img/logo.color.svg
+servers:
+- description: PROD
+  url: https://api.obslabs.io
+security:
+- apiToken: []
+paths:
+  /v1/organizations:
+    get:
+      operationId: v1-list-organizations
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_200_response'
+          description: List Organizations
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: List Organizations
+      tags:
+      - Organizations
+      x-stoplight:
+        id: ieo1xs6v1ixz9
+    post:
+      operationId: v1-create-organization
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Organizations.CreateBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_organization_201_response'
+          description: Create Organization
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Create Organization
+      tags:
+      - Organizations
+      x-stoplight:
+        id: 2euq70ov6jnoo
+  /v1/organizations/{oID}:
+    delete:
+      description: Delete Organization
+      operationId: v1-delete-organization
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete Organization
+      tags:
+      - Organizations
+      x-stoplight:
+        id: stt92h5jxmv28
+    get:
+      description: Get Organization
+      operationId: v1-get-organization
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_organization_201_response'
+          description: Get Organization
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Get Organization
+      tags:
+      - Organizations
+      x-stoplight:
+        id: 7d7lugk98kqlc
+    patch:
+      description: Update Organization
+      operationId: v1-update-organization
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Organizations.UpdateBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_organization_201_response'
+          description: Update Ogranization
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Update Organization
+      tags:
+      - Organizations
+      x-stoplight:
+        id: zjrg636wg6wa4
+  /v1/organizations/{oID}/projects:
+    get:
+      description: List Projects
+      operationId: v1-list-projects
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_list_projects_200_response'
+          description: List Projects
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: List Projects
+      tags:
+      - Projects
+      x-stoplight:
+        id: 6nwhavov1c57h
+    post:
+      description: Create Project
+      operationId: v1-create-project
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Projects.CreateBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_project_201_response'
+          description: Create Project
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Create Project
+      tags:
+      - Projects
+      x-stoplight:
+        id: 33s2sf3zkr3vc
+  /v1/organizations/{oID}/projects/{pID}:
+    delete:
+      operationId: v1-delete-project
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete Project
+      tags:
+      - Projects
+      x-stoplight:
+        id: nepwdmvh22vss
+    get:
+      operationId: v1-get-project
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_project_201_response'
+          description: Get Project
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Get Project
+      tags:
+      - Projects
+      x-stoplight:
+        id: kj42fw3zbtzhr
+    patch:
+      operationId: v1-update-project
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Projects.UpdateBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_update_project_200_response'
+          description: Update Project
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Update Project
+      tags:
+      - Projects
+      x-stoplight:
+        id: nzn02j14d02rg
+  /v1/organizations/{oID}/projects/{pID}/probes:
+    get:
+      description: List probes
+      operationId: v1-list-probes
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_list_probes_200_response'
+          description: List Probes
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: List Probes
+      tags:
+      - Probes
+      x-stoplight:
+        id: 3iung7y0mdtsa
+    post:
+      description: Create Probe
+      operationId: v1-create-probe
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Probes.CreateBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_probe_201_response'
+          description: Create Probe
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Create Probe
+      tags:
+      - Probes
+      x-stoplight:
+        id: jydpxioog3ek8
+  /v1/organizations/{oID}/projects/{pID}/probes/{prID}:
+    delete:
+      operationId: v1-delete-probe
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: Probe ID
+        explode: false
+        in: path
+        name: prID
+        required: true
+        schema:
+          example: ECD3gsVktn1E_xuPYMlrig
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete Probe
+      tags:
+      - Probes
+      x-stoplight:
+        id: ybojx40sjcnud
+    get:
+      operationId: v1-get-probe
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: Probe ID
+        explode: false
+        in: path
+        name: prID
+        required: true
+        schema:
+          example: ECD3gsVktn1E_xuPYMlrig
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_probe_201_response'
+          description: Get Probe
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Get Probe
+      tags:
+      - Probes
+      x-stoplight:
+        id: mfdrqlobghgch
+    patch:
+      operationId: v1-update-probe
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: Probe ID
+        explode: false
+        in: path
+        name: prID
+        required: true
+        schema:
+          example: ECD3gsVktn1E_xuPYMlrig
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Probes.UpdateBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_probe_201_response'
+          description: Update Probe
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Update Probe
+      tags:
+      - Probes
+      x-stoplight:
+        id: rvzkcv7mazpsq
+  /v1/organizations/{oID}/projects/{pID}/channels:
+    get:
+      description: List Channels
+      operationId: v1-list-channels
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_list_channels_200_response'
+          description: List Channels
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: List Channels
+      tags:
+      - Channels
+      x-stoplight:
+        id: n94fgwu6rwgr4
+    post:
+      description: Create Channel
+      operationId: v1-create-channel
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Channels.CreateBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_channel_201_response'
+          description: Create Channel
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Create Channel
+      tags:
+      - Channels
+      x-stoplight:
+        id: 1y8ed8plejmg6
+  /v1/organizations/{oID}/projects/{pID}/channels/{chID}:
+    delete:
+      description: Delete Channel
+      operationId: v1-delete-channel
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: Channel ID
+        explode: false
+        in: path
+        name: chID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete Channel
+      tags:
+      - Channels
+      x-stoplight:
+        id: 58rlmo7u972k9
+    get:
+      description: Get Channel
+      operationId: v1-get-channel
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: Channel ID
+        explode: false
+        in: path
+        name: chID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_channel_201_response'
+          description: Get Channel
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Get Channel
+      tags:
+      - Channels
+      x-stoplight:
+        id: tgj8wspomk9d5
+    patch:
+      description: Update Channel
+      operationId: v1-update-channel
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: Channel ID
+        explode: false
+        in: path
+        name: chID
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Channels.UpdateBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_channel_201_response'
+          description: Update Channel
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Update Channel
+      tags:
+      - Channels
+      x-stoplight:
+        id: bl4savi6e40ih
+  /v1/organizations/{oID}/invitations:
+    get:
+      description: List Invitations
+      operationId: v1-list-invitations
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_list_invitations_200_response'
+          description: List Invitations
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: List Invitations
+      tags:
+      - Invitations
+      x-stoplight:
+        id: 31oxta72sgzjm
+    post:
+      description: Send Invitation
+      operationId: v1-send-invitation
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Invitations.SendBody'
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_send_invitation_201_response'
+          description: Send Invitation
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Send Invitation
+      tags:
+      - Invitations
+      x-stoplight:
+        id: 5z57dh3b4c98m
+  /v1/organizations/{oID}/invitations/{invID}:
+    delete:
+      operationId: v1-revoke-invitation
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Invitation ID
+        explode: false
+        in: path
+        name: invID
+        required: true
+        schema:
+          example: 2pg7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Revoke Invitation
+      tags:
+      - Invitations
+      x-stoplight:
+        id: cwzcw54dqjrkm
+    get:
+      operationId: v1-get-invitation
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Invitation ID
+        explode: false
+        in: path
+        name: invID
+        required: true
+        schema:
+          example: 2pg7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_send_invitation_201_response'
+          description: Example response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Get Invitation
+      tags:
+      - Invitations
+      x-stoplight:
+        id: oy60reuxi25d1
+  /v1/organizations/{oID}/invitations/{invID}/accept:
+    post:
+      operationId: v1-accept-invitation
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Invitation ID
+        explode: false
+        in: path
+        name: invID
+        required: true
+        schema:
+          example: 2pg7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Invitations.SecretKeyBody'
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Accept Invitation
+      tags:
+      - Invitations
+      x-stoplight:
+        id: fwm2nm4h5xuqe
+  /v1/organizations/{oID}/invitations/{invID}/resend:
+    post:
+      description: Resend Invitation
+      operationId: v1-resend-invitation
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Invitation ID
+        explode: false
+        in: path
+        name: invID
+        required: true
+        schema:
+          example: 2pg7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_send_invitation_201_response'
+          description: Example response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Resend Invitation
+      tags:
+      - Invitations
+      x-stoplight:
+        id: yjotxmj2nuzxi
+  /v1/organizations/{oID}/members/{uID}:
+    delete:
+      description: Delete Organization Member
+      operationId: v1-organization-member-delete
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: User ID
+        explode: false
+        in: path
+        name: uID
+        required: true
+        schema:
+          example: iaI_KnKzSNxMhqwNKfvEuw
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete Organization Memeber
+      tags:
+      - Organizations
+      x-stoplight:
+        id: or1ct5eudg5k0
+    patch:
+      operationId: v1-organization-member-update
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: User ID
+        explode: false
+        in: path
+        name: uID
+        required: true
+        schema:
+          example: iaI_KnKzSNxMhqwNKfvEuw
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Organizations.Members.UpdateBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_organization_member_update_200_response'
+          description: Update Organization Member
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Update Organization Member
+      tags:
+      - Organizations
+      x-stoplight:
+        id: igcv53hpxc237
+  /v1/organizations/{oID}/projects/{pID}/members:
+    post:
+      description: Add Organization Member to Project
+      operationId: v1-project-member-create
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Projects.Members.CreateBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_project_member_create_200_response'
+          description: Add Project Member Response
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Add Project Member
+      tags:
+      - Projects
+      x-stoplight:
+        id: 5qaa9qucgip5x
+  /v1/organizations/{oID}/projects/{pID}/members/{uID}:
+    delete:
+      description: Delete Project Member
+      operationId: v1-project-member-delete
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: User ID
+        explode: false
+        in: path
+        name: uID
+        required: true
+        schema:
+          example: iaI_KnKzSNxMhqwNKfvEuw
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete Project Member
+      tags:
+      - Projects
+      x-stoplight:
+        id: o5ccn32kvo5c7
+    patch:
+      description: Update Project Member
+      operationId: v1-project-member-update
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: User ID
+        explode: false
+        in: path
+        name: uID
+        required: true
+        schema:
+          example: iaI_KnKzSNxMhqwNKfvEuw
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/V1.Projects.Members.UpdateBody'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_project_member_create_200_response'
+          description: Update Project Member Response
+        "400":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 400
+                      code: VALIDATION
+                      message: Validation errors occurred.
+                      details:
+                      - field: email
+                        issue: Is not valid email address
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Response
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Update Project Member
+      tags:
+      - Projects
+      x-stoplight:
+        id: 4c1sr93lvrfie
+  /v1/organizations/{oID}/projects/{pID}/integrations:
+    get:
+      operationId: v1-list-integrations
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_list_integrations_200_response'
+          description: List Integrations
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: List Integrations
+      tags:
+      - Integrations
+      x-stoplight:
+        id: zkfwbldht09rm
+  /v1/organizations/{oID}/projects/{pID}/integrations/{intID}:
+    delete:
+      operationId: v1-delete-integrations
+      parameters:
+      - description: Organization ID
+        explode: false
+        in: path
+        name: oID
+        required: true
+        schema:
+          example: NTz6OnG_yqlm_0qUmjHJjg
+          type: string
+        style: simple
+      - description: Project ID
+        explode: false
+        in: path
+        name: pID
+        required: true
+        schema:
+          example: 1_g7EQvDIFjREnMBuRQ30Q
+          type: string
+        style: simple
+      - description: Integration ID
+        explode: false
+        in: path
+        name: intID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "403":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 403
+                      code: FORBIDDEN
+                      message: You do not have permission to access this resource.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Forbidden
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete Integration
+      tags:
+      - Integrations
+      x-stoplight:
+        id: jlh206wnjfg9i
+  /v1/users/me:
+    get:
+      operationId: v1-my-user
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_my_user_200_response'
+          description: Get User.
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "404":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 404
+                      code: NOT_FOUND
+                      message: Resource not found.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Not Found
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: My User
+      tags:
+      - Users
+      x-stoplight:
+        id: y44xofsi6nqek
+  /v1/api-keys:
+    get:
+      operationId: v1-list-api-keys
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_list_api_keys_200_response'
+          description: List API Keys
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: List API Keys
+      tags:
+      - API Keys
+      x-stoplight:
+        id: 2rwl9ia854asb
+    post:
+      description: Create API Key
+      operationId: v1-create-api-key
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1_create_api_key_201_response'
+          description: Create API Key
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Create API Key
+      tags:
+      - API Keys
+      x-stoplight:
+        id: 697tynsgx8kek
+  /v1/api-keys/{kID}:
+    delete:
+      description: Delete API Key
+      operationId: v1-delete-api-key
+      parameters:
+      - explode: false
+        in: path
+        name: kID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "401":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 401
+                      code: UNAUTHORIZED
+                      message: "Authentication is required. Read more in API Documentation\
+                        \ paragraph #Authentication"
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: 'Error Unauthorized '
+        "500":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    error:
+                      status: 500
+                      code: INTERNAL
+                      message: Internal error occurred. An error report has been sent
+                        to the team. Please try again later.
+              schema:
+                $ref: '#/components/schemas/v1_list_organizations_401_response'
+          description: Error Internal
+      summary: Delete API Keys
+      tags:
+      - API Keys
+      x-stoplight:
+        id: 0i024pjhmhyon
+components:
+  parameters:
+    Organization-ID:
+      description: Organization ID
+      explode: false
+      in: path
+      name: oID
+      required: true
+      schema:
+        example: NTz6OnG_yqlm_0qUmjHJjg
+        type: string
+      style: simple
+    Project-ID:
+      description: Project ID
+      explode: false
+      in: path
+      name: pID
+      required: true
+      schema:
+        example: 1_g7EQvDIFjREnMBuRQ30Q
+        type: string
+      style: simple
+    Invitation-ID:
+      description: Invitation ID
+      explode: false
+      in: path
+      name: invID
+      required: true
+      schema:
+        example: 2pg7EQvDIFjREnMBuRQ30Q
+        type: string
+      style: simple
+    User-ID:
+      description: User ID
+      explode: false
+      in: path
+      name: uID
+      required: true
+      schema:
+        example: iaI_KnKzSNxMhqwNKfvEuw
+        type: string
+      style: simple
+    Probe-ID:
+      description: Probe ID
+      explode: false
+      in: path
+      name: prID
+      required: true
+      schema:
+        example: ECD3gsVktn1E_xuPYMlrig
+        type: string
+      style: simple
+    Channel-ID:
+      description: Channel ID
+      explode: false
+      in: path
+      name: chID
+      required: true
+      schema:
+        type: string
+      style: simple
+    Integration-ID:
+      description: Integration ID
+      explode: false
+      in: path
+      name: intID
+      required: true
+      schema:
+        type: string
+      style: simple
+  requestBodies:
+    V1.Probes.CreateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_probe_request'
+      description: Create Probe
+    V1.Channels.CreateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_channel_request'
+      description: Create Channel
+    V1.Channels.UpdateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_update_channel_request'
+      description: Update Channel
+    V1.Probes.UpdateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_update_probe_request'
+      description: Update Probe
+    V1.Projects.UpdateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_update_project_request'
+      description: Update Project
+    V1.Organizations.CreateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_organization_request'
+    V1.Organizations.UpdateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_update_organization_request'
+    V1.Projects.CreateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_project_request'
+    V1.Invitations.SendBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_send_invitation_request'
+    V1.Projects.Members.UpdateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_project_member_update_request'
+    V1.Projects.Members.CreateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_project_member_create_request'
+    V1.Organizations.Members.UpdateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_organization_member_update_request'
+    V1.Invitations.SecretKeyBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_accept_invitation_request'
+  responses:
+    V1.Projects.ListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_list_projects_200_response'
+      description: List Projects
+    V1.Projects.CreateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_project_201_response'
+      description: Create Project
+    V1.Probes.ListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_list_probes_200_response'
+      description: List Probes
+    V1.Channels.GetResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_channel_201_response'
+      description: Get Channel
+    V1.Channels.UpdateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_channel_201_response'
+      description: Update Channel
+    V1.Channels.ListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_list_channels_200_response'
+      description: List Channels
+    V1.Channels.CreateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_channel_201_response'
+      description: Create Channel
+    V1.Probes.CreateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_probe_201_response'
+      description: Create Probe
+    V1.Probes.GetResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_probe_201_response'
+      description: Get Probe
+    V1.Probes.UpdateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_probe_201_response'
+      description: Update Probe
+    V1.Projects.UpdateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_update_project_200_response'
+      description: Update Project
+    V1.Projects.GetResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_project_201_response'
+      description: Get Project
+    V1.Organizations.ListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_list_organizations_200_response'
+      description: List Organizations
+    V1.Organizations.GetResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_organization_201_response'
+      description: Get Organization
+    V1.Organizations.UpdateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_organization_201_response'
+      description: Update Ogranization
+    V1.Organizations.CreateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_organization_201_response'
+      description: Create Organization
+    V1.Users.GetResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_my_user_200_response'
+      description: Get User.
+    V1.Invitations.ListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_list_invitations_200_response'
+      description: List Invitations
+    V1.Projects.Members.UpdateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_project_member_create_200_response'
+      description: Update Project Member Response
+    V1.Organizations.Members.UpdateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_organization_member_update_200_response'
+      description: Update Organization Member
+    V1.Projects.Members.AddResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_project_member_create_200_response'
+      description: Add Project Member Response
+    ErrorResponse:
+      content:
+        application/json:
+          examples:
+            Example 1:
+              value:
+                error:
+                  status: 400
+                  code: VALIDATION
+                  message: Validation errors occurred.
+                  details:
+                  - field: email
+                    issue: Is not valid email address
+          schema:
+            $ref: '#/components/schemas/v1_list_organizations_401_response'
+      description: Error Response
+    V1.Invitations.SendResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_send_invitation_201_response'
+      description: Send Invitation
+    V1.Invitations.GetResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_send_invitation_201_response'
+      description: Example response
+    ErrorUnauthorizedResponse:
+      content:
+        application/json:
+          examples:
+            Example 1:
+              value:
+                error:
+                  status: 401
+                  code: UNAUTHORIZED
+                  message: "Authentication is required. Read more in API Documentation\
+                    \ paragraph #Authentication"
+          schema:
+            $ref: '#/components/schemas/v1_list_organizations_401_response'
+      description: 'Error Unauthorized '
+    ErrorForbiddenResponse:
+      content:
+        application/json:
+          examples:
+            Example 1:
+              value:
+                error:
+                  status: 403
+                  code: FORBIDDEN
+                  message: You do not have permission to access this resource.
+          schema:
+            $ref: '#/components/schemas/v1_list_organizations_401_response'
+      description: Error Forbidden
+    ErrorNotFoundResponse:
+      content:
+        application/json:
+          examples:
+            Example 1:
+              value:
+                error:
+                  status: 404
+                  code: NOT_FOUND
+                  message: Resource not found.
+          schema:
+            $ref: '#/components/schemas/v1_list_organizations_401_response'
+      description: Error Not Found
+    ErrorInternalResponse:
+      content:
+        application/json:
+          examples:
+            Example 1:
+              value:
+                error:
+                  status: 500
+                  code: INTERNAL
+                  message: Internal error occurred. An error report has been sent
+                    to the team. Please try again later.
+          schema:
+            $ref: '#/components/schemas/v1_list_organizations_401_response'
+      description: Error Internal
+    V1.Invitations.ResendResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_send_invitation_201_response'
+      description: Example response
+    V1.Invitations.AcceptResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              organization:
+                $ref: '#/components/schemas/OrganizationModel'
+            required:
+            - organization
+            type: object
+      description: Accept Invitation Response
+    V1.Integrations.ListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_list_integrations_200_response'
+      description: List Integrations
+    ErrorResourceLimitExceeded:
+      content:
+        application/json:
+          examples:
+            Example 1:
+              value:
+                error:
+                  status: 403
+                  code: RESOURCE_LIMIT_EXCEEDED
+                  message: Probe limit exceeded. Upgrade your plan to create more
+                    probes.
+          schema:
+            properties:
+              error:
+                $ref: '#/components/schemas/ErrorModel'
+            required:
+            - error
+            type: object
+      description: Error Resource Limit Exceeded
+    V1.ApiKeys.CreateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_create_api_key_201_response'
+      description: Create API Key
+    V1.ApiKeys.ListResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/v1_list_api_keys_200_response'
+      description: List API Keys
+  schemas:
+    ProjectModel:
+      example:
+        organization_id: organization_id
+        members:
+        - role: role
+          name: name
+          id: id
+          email: email
+        - role: role
+          name: name
+          id: id
+          email: email
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: n3oqezg6592p7
+        name:
+          type: string
+          x-stoplight:
+            id: 6ridz0d6dj4e6
+        organization_id:
+          type: string
+          x-stoplight:
+            id: eano8rgngom94
+        members:
+          items:
+            $ref: '#/components/schemas/ProjectMemberModel'
+          minItems: 0
+          type: array
+          x-stoplight:
+            id: 9rpp914dex2hb
+      required:
+      - id
+      - members
+      - name
+      - organization_id
+      title: Project
+      type: object
+      x-stoplight:
+        id: 4uomuwfqnw6y8
+    ProjectMemberModel:
+      example:
+        role: role
+        name: name
+        id: id
+        email: email
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: baoijttah763r
+        name:
+          type: string
+          x-stoplight:
+            id: rgv3lo0wtuj6w
+        role:
+          type: string
+          x-stoplight:
+            id: gsm0djh1utbma
+        email:
+          type: string
+          x-stoplight:
+            id: vvv4a5jb7bv2g
+      required:
+      - email
+      - id
+      - name
+      - role
+      title: ProjectMember
+      type: object
+      x-stoplight:
+        id: zy5ovf2zq3amg
+    ChannelModel:
+      example:
+        emails:
+        - name: name
+          id: id
+          email: email
+        - name: name
+          id: id
+          email: email
+        project_id: project_id
+        webhooks:
+        - name: name
+          id: id
+          url: url
+        - name: name
+          id: id
+          url: url
+        name: name
+        id: id
+        slacks:
+        - integration_id: integration_id
+          id: id
+        - integration_id: integration_id
+          id: id
+        smss:
+        - phone: phone
+          name: name
+          id: id
+        - phone: phone
+          name: name
+          id: id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: hwswknrtbjud8
+        name:
+          type: string
+          x-stoplight:
+            id: ei71v3kiwkw56
+        project_id:
+          type: string
+          x-stoplight:
+            id: q5jjgu760wrqt
+        emails:
+          items:
+            $ref: '#/components/schemas/ChannelEmailModel'
+          type: array
+          x-stoplight:
+            id: yrbo86obx7ai9
+        webhooks:
+          items:
+            $ref: '#/components/schemas/ChannelWebhookModel'
+          type: array
+          x-stoplight:
+            id: 2zapj6ydfu5h2
+        slacks:
+          items:
+            $ref: '#/components/schemas/ChannelSlackModel'
+          type: array
+          x-stoplight:
+            id: lllguvi5de22z
+        smss:
+          items:
+            $ref: '#/components/schemas/ChannelSmsModel'
+          type: array
+          x-stoplight:
+            id: swwgw6ho1mrjo
+      required:
+      - emails
+      - id
+      - name
+      - project_id
+      - slacks
+      - smss
+      - webhooks
+      title: ChannelModel
+      type: object
+      x-stoplight:
+        id: ftsnfkghu64qp
+    ProbeModel:
+      example:
+        schedule:
+          period_seconds: 12690
+          expression: expression
+          failure_threshold: 1
+          success_threshold: 6
+          type: periodic
+        channels:
+        - name: name
+          id: id
+        - name: name
+          id: id
+        status_checked_at: 2000-01-23T04:56:07.000+00:00
+        status_changed_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        id: id
+        type: push
+        url: url
+        status: success
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: adozhhj8l30ho
+        name:
+          maxLength: 16
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: q0df8lmgdaceq
+        type:
+          enum:
+          - push
+          - pull
+          type: string
+          x-stoplight:
+            id: gopwfl6cme0fa
+        url:
+          type: string
+          x-stoplight:
+            id: njun6b75qozc2
+        status:
+          enum:
+          - success
+          - failure
+          - paused
+          type: string
+          x-stoplight:
+            id: xmdjgdxylan06
+        status_checked_at:
+          format: date-time
+          nullable: true
+          type: string
+          x-stoplight:
+            id: jg7qwzz2ss4bm
+        status_changed_at:
+          format: date-time
+          nullable: true
+          type: string
+          x-stoplight:
+            id: ys88u4w3muxzb
+        schedule:
+          $ref: '#/components/schemas/ProbeScheduleModel'
+        channels:
+          items:
+            $ref: '#/components/schemas/ProbeChannelModel'
+          type: array
+          x-stoplight:
+            id: loyna2lx7xf8m
+      required:
+      - channels
+      - id
+      - name
+      - schedule
+      - status
+      - status_changed_at
+      - status_checked_at
+      - type
+      - url
+      title: ProbeModel
+      type: object
+      x-stoplight:
+        id: fcx21nui25lmn
+    ChannelEmailModel:
+      example:
+        name: name
+        id: id
+        email: email
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: wbpropgrj1hxz
+        name:
+          type: string
+          x-stoplight:
+            id: p9lpzfc2blo5k
+        email:
+          type: string
+          x-stoplight:
+            id: ub717mxo4frqs
+      required:
+      - email
+      - id
+      - name
+      title: ChannelEmailModel
+      type: object
+      x-stoplight:
+        id: wv9m9rtje96z5
+    ChannelWebhookModel:
+      example:
+        name: name
+        id: id
+        url: url
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 0kq63vt8b7nqt
+        name:
+          type: string
+          x-stoplight:
+            id: euidevz4qm5m1
+        url:
+          type: string
+          x-stoplight:
+            id: raqit95dq74s8
+      required:
+      - id
+      - name
+      - url
+      title: ChannelWebhookModel
+      type: object
+      x-stoplight:
+        id: 6319za1f3kigu
+    ChannelSlackModel:
+      example:
+        integration_id: integration_id
+        id: id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: rsn3400t8ku8w
+        integration_id:
+          type: string
+          x-stoplight:
+            id: 4o2nr8ro5pjbi
+      required:
+      - id
+      - integration_id
+      title: ChannelSlackModel
+      type: object
+      x-stoplight:
+        id: v6bnyuvdhw0ds
+    ChannelSmsModel:
+      example:
+        phone: phone
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: gdjav3divxpz7
+        name:
+          type: string
+          x-stoplight:
+            id: ilizaazrgiqy2
+        phone:
+          type: string
+          x-stoplight:
+            id: wc305d1l9qkd9
+      required:
+      - id
+      - name
+      - phone
+      title: ChannelSmsModel
+      type: object
+      x-stoplight:
+        id: dhxkdqzms7puc
+    ProbeChannelModel:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: l7y2g91l4bjkd
+        name:
+          type: string
+          x-stoplight:
+            id: 25x9wu9gg2dwg
+      required:
+      - id
+      - name
+      title: ProbeChannelModel
+      type: object
+      x-stoplight:
+        id: dtz9ryqkoyvl5
+    ProbeScheduleModel:
+      example:
+        period_seconds: 12690
+        expression: expression
+        failure_threshold: 1
+        success_threshold: 6
+        type: periodic
+      properties:
+        type:
+          enum:
+          - periodic
+          - cron
+          type: string
+          x-stoplight:
+            id: egnr9pl15maqp
+        failure_threshold:
+          default: 1
+          format: int32
+          maximum: 10
+          minimum: 1
+          type: integer
+          x-stoplight:
+            id: hgb5bc8o1htsz
+        success_threshold:
+          default: 1
+          format: int32
+          maximum: 10
+          minimum: 1
+          type: integer
+          x-stoplight:
+            id: r3hn8gl5i9ehh
+        expression:
+          description: Required if type is "cron"
+          type: string
+          x-stoplight:
+            id: bcd52iztxnvr3
+        period_seconds:
+          default: 360
+          description: Required if type is "period"
+          format: int32
+          maximum: 86400
+          minimum: 30
+          type: integer
+          x-stoplight:
+            id: z6yj83rtzwu1k
+      required:
+      - failure_threshold
+      - success_threshold
+      - type
+      title: ProbeScheduleModel
+      type: object
+      x-stoplight:
+        id: dr93pmgczdfai
+    OrganizationModel:
+      example:
+        projects:
+        - name: name
+          id: id
+        - name: name
+          id: id
+        members:
+        - role: role
+          name: name
+          id: id
+          email: email
+        - role: role
+          name: name
+          id: id
+          email: email
+        name: name
+        trial_ends_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        subscription:
+          paddle_customer_id: paddle_customer_id
+          id: id
+          scheduled_change:
+            effective_at: 2000-01-23T04:56:07.000+00:00
+            resume_at: 2000-01-23T04:56:07.000+00:00
+            action: cancel
+          plan: plan
+          next_billed_at: 2000-01-23T04:56:07.000+00:00
+          status: active
+        is_trial: true
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: d9yquix6obb6h
+        name:
+          type: string
+          x-stoplight:
+            id: vdumboba297uc
+        is_trial:
+          type: boolean
+          x-stoplight:
+            id: 9c2awuhc027dt
+        trial_ends_at:
+          format: date-time
+          type: string
+          x-stoplight:
+            id: eow5gzp7w1qkm
+        members:
+          items:
+            $ref: '#/components/schemas/OrganizationMemberModel'
+          type: array
+          x-stoplight:
+            id: 5x6vhirzzbobo
+        projects:
+          items:
+            $ref: '#/components/schemas/OrganizationProjectModel'
+          type: array
+          x-stoplight:
+            id: 1184a6m0ib8jr
+        subscription:
+          $ref: '#/components/schemas/OrganizationSubscriptionModel'
+      required:
+      - id
+      - is_trial
+      - members
+      - name
+      - projects
+      title: OrganizationModel
+      type: object
+      x-stoplight:
+        id: x6nf7ej9cnudl
+    OrganizationProjectModel:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: v85g8zkbggd8k
+        name:
+          type: string
+          x-stoplight:
+            id: a8zgrddqb9x11
+      required:
+      - id
+      - name
+      title: OrganizationProjectModel
+      type: object
+      x-stoplight:
+        id: nr80oukyelo87
+    OrganizationSubscriptionModel:
+      example:
+        paddle_customer_id: paddle_customer_id
+        id: id
+        scheduled_change:
+          effective_at: 2000-01-23T04:56:07.000+00:00
+          resume_at: 2000-01-23T04:56:07.000+00:00
+          action: cancel
+        plan: plan
+        next_billed_at: 2000-01-23T04:56:07.000+00:00
+        status: active
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: nfoeoe05lbg40
+        plan:
+          type: string
+          x-stoplight:
+            id: gz1i0guxy0o5n
+        status:
+          enum:
+          - active
+          - canceled
+          - past_due
+          - paused
+          type: string
+          x-stoplight:
+            id: 9ba51p1j59l6x
+        next_billed_at:
+          format: date-time
+          type: string
+          x-stoplight:
+            id: whw9bur6fm1mb
+        scheduled_change:
+          $ref: '#/components/schemas/OrganizationSubscriptionScheduledChangeModel'
+        paddle_customer_id:
+          type: string
+          x-stoplight:
+            id: 8ilv523bf65tm
+      required:
+      - id
+      - paddle_customer_id
+      - plan
+      - status
+      title: OrganizationSubscriptionModel
+      type: object
+      x-stoplight:
+        id: wwt8wwazblr55
+    OrganizationSubscriptionScheduledChangeModel:
+      example:
+        effective_at: 2000-01-23T04:56:07.000+00:00
+        resume_at: 2000-01-23T04:56:07.000+00:00
+        action: cancel
+      properties:
+        action:
+          enum:
+          - cancel
+          - pause
+          - resume
+          type: string
+          x-stoplight:
+            id: 909dwo27rptzu
+        effective_at:
+          format: date-time
+          type: string
+          x-stoplight:
+            id: d219g6bimgflx
+        resume_at:
+          format: date-time
+          type: string
+          x-stoplight:
+            id: 4el00rqvxae0m
+      required:
+      - action
+      - effective_at
+      title: OrganizationSubscriptionScheduledChangeModel
+      type: object
+      x-stoplight:
+        id: whfzc417bfjdq
+    OrganizationMemberModel:
+      example:
+        role: role
+        name: name
+        id: id
+        email: email
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: bdgih996sm5dd
+        name:
+          type: string
+          x-stoplight:
+            id: l2wu2wxc3gzhi
+        role:
+          type: string
+          x-stoplight:
+            id: vfk07tpoor8bc
+        email:
+          type: string
+          x-stoplight:
+            id: 63hycj75gh0kl
+      required:
+      - email
+      - id
+      - name
+      - role
+      title: OrganizationMembersModel
+      type: object
+      x-stoplight:
+        id: nhtgy9ubobb0l
+    UserModel:
+      example:
+        name: name
+        id: id
+        email: email
+        projects_role:
+        - role: owner
+          project_id: project_id
+        - role: owner
+          project_id: project_id
+        organizations_role:
+        - role: owner
+          organization_id: organization_id
+        - role: owner
+          organization_id: organization_id
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 3b72hinj82ftk
+        name:
+          type: string
+          x-stoplight:
+            id: o0kyxtr4i4bmq
+        email:
+          type: string
+          x-stoplight:
+            id: qngrc1zqfy0g0
+        organizations_role:
+          items:
+            $ref: '#/components/schemas/UserOrganizationRoleModel'
+          type: array
+          x-stoplight:
+            id: c8b4kvwzpdf1u
+        projects_role:
+          items:
+            $ref: '#/components/schemas/UserProjectRoleModel'
+          type: array
+          x-stoplight:
+            id: 11a1apo3xqrwc
+      required:
+      - email
+      - id
+      - name
+      - organizations_role
+      - projects_role
+      title: UserInfoModel
+      type: object
+      x-stoplight:
+        id: 073zkpq2xuyhz
+    UserOrganizationRoleModel:
+      example:
+        role: owner
+        organization_id: organization_id
+      properties:
+        organization_id:
+          type: string
+          x-stoplight:
+            id: e2ez7lgi934cw
+        role:
+          enum:
+          - owner
+          - manager
+          - member
+          type: string
+          x-stoplight:
+            id: oybc9sj5l42lq
+      required:
+      - organization_id
+      - role
+      title: UserOrganizationRoleModel
+      type: object
+      x-stoplight:
+        id: 2i64uw4h9s1g6
+    UserProjectRoleModel:
+      example:
+        role: owner
+        project_id: project_id
+      properties:
+        project_id:
+          type: string
+          x-stoplight:
+            id: skkcl91gkl9vy
+        role:
+          enum:
+          - owner
+          - manager
+          - viewer
+          type: string
+      required:
+      - project_id
+      - role
+      title: UserProjectRoleModel
+      type: object
+      x-stoplight:
+        id: c966sr9chj89b
+    InvitationModel:
+      example:
+        sent_at: 2000-01-23T04:56:07.000+00:00
+        role: owner
+        id: id
+        email: email
+        status: pending
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 7q4cd8qws2jig
+        email:
+          type: string
+          x-stoplight:
+            id: 3ofdb2ob5rq0q
+        status:
+          enum:
+          - pending
+          - accepted
+          - declined
+          - revoked
+          - expired
+          type: string
+          x-stoplight:
+            id: 59uhcxabt8lj0
+        role:
+          enum:
+          - owner
+          - manager
+          - member
+          type: string
+          x-stoplight:
+            id: fktjvjp4rxgo0
+        sent_at:
+          format: date-time
+          type: string
+          x-stoplight:
+            id: wow81vl53d596
+      required:
+      - email
+      - id
+      - role
+      - sent_at
+      - status
+      title: InvitationModel
+      type: object
+      x-stoplight:
+        id: 6kos3i6yakwmo
+    ErrorModel:
+      example:
+        code: UNAUTHORIZED
+        details:
+        - field: field
+          issue: issue
+        - field: field
+          issue: issue
+        message: message
+        status: 139
+      properties:
+        status:
+          format: int32
+          maximum: 599
+          minimum: 100
+          type: integer
+          x-stoplight:
+            id: uyk62vo6j8c7x
+        code:
+          enum:
+          - VALIDATION
+          - UNAUTHORIZED
+          - FORBIDDEN
+          - NOT_FOUND
+          - INTERNAL
+          - RESOURCE_LIMIT_EXCEEDED
+          example: UNAUTHORIZED
+          type: string
+          x-stoplight:
+            id: tgk26wkhnhipb
+        message:
+          type: string
+          x-stoplight:
+            id: 0ptuzeidckc6p
+        details:
+          items:
+            $ref: '#/components/schemas/ErrorDetailModel'
+          type: array
+          x-stoplight:
+            id: 1itg4zcrqjg3a
+      required:
+      - code
+      - message
+      - status
+      title: ErrorModel
+      type: object
+      x-stoplight:
+        id: awdm8ybjp0fqp
+      x-examples:
+        Unauthorized:
+          status: 401
+          code: UNAUTHORIZED
+          message: string
+        Example 2:
+          status: 100
+          code: VALIDATION
+          message: string
+          details:
+          - field: string
+            issue: string
+    ErrorDetailModel:
+      example:
+        field: field
+        issue: issue
+      properties:
+        field:
+          type: string
+          x-stoplight:
+            id: gfw8rdhgynjlj
+        issue:
+          type: string
+          x-stoplight:
+            id: kmg1tcflgdwjd
+      required:
+      - field
+      - issue
+      title: ErrorDetailModel
+      type: object
+      x-stoplight:
+        id: k8n225569scfa
+    IntegrationModel:
+      example:
+        slack:
+          channel: channel
+          team_id: team_id
+          channel_id: channel_id
+          team_name: team_name
+        id: id
+        type: slack
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 5kqh8t7ckxsq9
+        type:
+          example: slack
+          type: string
+          x-stoplight:
+            id: 7uk9hvwun8pjc
+        slack:
+          $ref: '#/components/schemas/IntegrationSlackModel'
+      required:
+      - id
+      - type
+      title: IntegrationModel
+      type: object
+      x-stoplight:
+        id: ywabgkxos5pgz
+    IntegrationSlackModel:
+      example:
+        channel: channel
+        team_id: team_id
+        channel_id: channel_id
+        team_name: team_name
+      properties:
+        team_id:
+          type: string
+          x-stoplight:
+            id: 97sj5ca6nuhdg
+        team_name:
+          type: string
+          x-stoplight:
+            id: m4f7eqshlpx4o
+        channel_id:
+          type: string
+          x-stoplight:
+            id: 5ti69iv68pfx7
+        channel:
+          type: string
+          x-stoplight:
+            id: 8u48a8zt6ywmu
+      required:
+      - channel
+      - channel_id
+      - team_id
+      - team_name
+      title: IntegrationSlackModel
+      type: object
+      x-stoplight:
+        id: nbv1v5xwomzbo
+    ApiKeyModel:
+      example:
+        last_used: 2000-01-23T04:56:07.000+00:00
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        key: key
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: 6cg7yvcb8hxwh
+        key:
+          type: string
+          x-stoplight:
+            id: 8ab0upa4xbc62
+        last_used:
+          format: date-time
+          nullable: true
+          type: string
+          x-stoplight:
+            id: b3oygolan5a7x
+        created_at:
+          format: date-time
+          type: string
+          x-stoplight:
+            id: vedlx5bzav2pn
+      required:
+      - created_at
+      - id
+      - key
+      - last_used
+      title: ApiKeyModel
+      type: object
+      x-stoplight:
+        id: kkvoienoh7n75
+    v1_list_organizations_200_response:
+      example:
+        organizations:
+        - projects:
+          - name: name
+            id: id
+          - name: name
+            id: id
+          members:
+          - role: role
+            name: name
+            id: id
+            email: email
+          - role: role
+            name: name
+            id: id
+            email: email
+          name: name
+          trial_ends_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          subscription:
+            paddle_customer_id: paddle_customer_id
+            id: id
+            scheduled_change:
+              effective_at: 2000-01-23T04:56:07.000+00:00
+              resume_at: 2000-01-23T04:56:07.000+00:00
+              action: cancel
+            plan: plan
+            next_billed_at: 2000-01-23T04:56:07.000+00:00
+            status: active
+          is_trial: true
+        - projects:
+          - name: name
+            id: id
+          - name: name
+            id: id
+          members:
+          - role: role
+            name: name
+            id: id
+            email: email
+          - role: role
+            name: name
+            id: id
+            email: email
+          name: name
+          trial_ends_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          subscription:
+            paddle_customer_id: paddle_customer_id
+            id: id
+            scheduled_change:
+              effective_at: 2000-01-23T04:56:07.000+00:00
+              resume_at: 2000-01-23T04:56:07.000+00:00
+              action: cancel
+            plan: plan
+            next_billed_at: 2000-01-23T04:56:07.000+00:00
+            status: active
+          is_trial: true
+      properties:
+        organizations:
+          items:
+            $ref: '#/components/schemas/OrganizationModel'
+          type: array
+          x-stoplight:
+            id: rocymmyr7q86w
+      required:
+      - organizations
+      type: object
+    v1_list_organizations_401_response:
+      example:
+        error:
+          code: UNAUTHORIZED
+          details:
+          - field: field
+            issue: issue
+          - field: field
+            issue: issue
+          message: message
+          status: 139
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorModel'
+      required:
+      - error
+      type: object
+    v1_create_organization_request:
+      properties:
+        name:
+          maxLength: 24
+          minLength: 1
+          type: string
+          x-stoplight:
+            id: sqqo4f39ejpqs
+      required:
+      - name
+      type: object
+    v1_create_organization_201_response:
+      example:
+        organization:
+          projects:
+          - name: name
+            id: id
+          - name: name
+            id: id
+          members:
+          - role: role
+            name: name
+            id: id
+            email: email
+          - role: role
+            name: name
+            id: id
+            email: email
+          name: name
+          trial_ends_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          subscription:
+            paddle_customer_id: paddle_customer_id
+            id: id
+            scheduled_change:
+              effective_at: 2000-01-23T04:56:07.000+00:00
+              resume_at: 2000-01-23T04:56:07.000+00:00
+              action: cancel
+            plan: plan
+            next_billed_at: 2000-01-23T04:56:07.000+00:00
+            status: active
+          is_trial: true
+      properties:
+        organization:
+          $ref: '#/components/schemas/OrganizationModel'
+      required:
+      - organization
+      type: object
+    v1_update_organization_request:
+      properties:
+        name:
+          maxLength: 24
+          minLength: 1
+          type: string
+          x-stoplight:
+            id: ouvvgzwa3y1t3
+      type: object
+    v1_list_projects_200_response:
+      example:
+        projects:
+        - organization_id: organization_id
+          members:
+          - role: role
+            name: name
+            id: id
+            email: email
+          - role: role
+            name: name
+            id: id
+            email: email
+          name: name
+          id: id
+        - organization_id: organization_id
+          members:
+          - role: role
+            name: name
+            id: id
+            email: email
+          - role: role
+            name: name
+            id: id
+            email: email
+          name: name
+          id: id
+      properties:
+        projects:
+          items:
+            $ref: '#/components/schemas/ProjectModel'
+          type: array
+          x-stoplight:
+            id: odmcveiqbxpe4
+      required:
+      - projects
+      type: object
+    v1_create_project_request:
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: 9o9c8w2v80myf
+      required:
+      - name
+      type: object
+    v1_create_project_201_response:
+      example:
+        project:
+          organization_id: organization_id
+          members:
+          - role: role
+            name: name
+            id: id
+            email: email
+          - role: role
+            name: name
+            id: id
+            email: email
+          name: name
+          id: id
+      properties:
+        project:
+          $ref: '#/components/schemas/ProjectModel'
+      required:
+      - project
+      type: object
+    v1_update_project_request:
+      properties:
+        name:
+          maxLength: 16
+          minLength: 1
+          type: string
+          x-stoplight:
+            id: uz7640o3lvybt
+      type: object
+    v1_update_project_200_response:
+      example:
+        project:
+          organization_id: organization_id
+          members:
+          - role: role
+            name: name
+            id: id
+            email: email
+          - role: role
+            name: name
+            id: id
+            email: email
+          name: name
+          id: id
+      properties:
+        project:
+          $ref: '#/components/schemas/ProjectModel'
+      type: object
+    v1_list_probes_200_response:
+      example:
+        probes:
+        - schedule:
+            period_seconds: 12690
+            expression: expression
+            failure_threshold: 1
+            success_threshold: 6
+            type: periodic
+          channels:
+          - name: name
+            id: id
+          - name: name
+            id: id
+          status_checked_at: 2000-01-23T04:56:07.000+00:00
+          status_changed_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: id
+          type: push
+          url: url
+          status: success
+        - schedule:
+            period_seconds: 12690
+            expression: expression
+            failure_threshold: 1
+            success_threshold: 6
+            type: periodic
+          channels:
+          - name: name
+            id: id
+          - name: name
+            id: id
+          status_checked_at: 2000-01-23T04:56:07.000+00:00
+          status_changed_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: id
+          type: push
+          url: url
+          status: success
+      properties:
+        probes:
+          items:
+            $ref: '#/components/schemas/ProbeModel'
+          type: array
+          x-stoplight:
+            id: 94h80mdz8hbpd
+      required:
+      - probes
+      type: object
+    v1_create_probe_request:
+      properties:
+        name:
+          maxLength: 32
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: pjt4i3f7jydjd
+        type:
+          enum:
+          - push
+          - pull
+          type: string
+          x-stoplight:
+            id: 3m5sa854j1x6c
+        url:
+          description: Required for pull probes. Autogenerated for push probes.
+          type: string
+          x-stoplight:
+            id: ir4yx8xpuvbgt
+        schedule:
+          $ref: '#/components/schemas/ProbeScheduleModel'
+        channels:
+          items:
+            type: string
+            x-stoplight:
+              id: hhjo3vvboyxr7
+          type: array
+          x-stoplight:
+            id: 8f879vvy4usp3
+      required:
+      - name
+      - type
+      type: object
+    v1_create_probe_201_response:
+      example:
+        probe:
+          schedule:
+            period_seconds: 12690
+            expression: expression
+            failure_threshold: 1
+            success_threshold: 6
+            type: periodic
+          channels:
+          - name: name
+            id: id
+          - name: name
+            id: id
+          status_checked_at: 2000-01-23T04:56:07.000+00:00
+          status_changed_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          id: id
+          type: push
+          url: url
+          status: success
+      properties:
+        probe:
+          $ref: '#/components/schemas/ProbeModel'
+      required:
+      - probe
+      type: object
+    v1_update_probe_request:
+      properties:
+        name:
+          maxLength: 32
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: t9r1w932vefqq
+        url:
+          description: Only pull probes can have updated URL
+          type: string
+          x-stoplight:
+            id: 3h24h2e5rbvlw
+        schedule:
+          $ref: '#/components/schemas/ProbeScheduleModel'
+        channels:
+          items:
+            type: string
+            x-stoplight:
+              id: 3pkp37yhp53jl
+          type: array
+          x-stoplight:
+            id: 2b7vonx4f1vxu
+      type: object
+    v1_list_channels_200_response:
+      example:
+        channels:
+        - emails:
+          - name: name
+            id: id
+            email: email
+          - name: name
+            id: id
+            email: email
+          project_id: project_id
+          webhooks:
+          - name: name
+            id: id
+            url: url
+          - name: name
+            id: id
+            url: url
+          name: name
+          id: id
+          slacks:
+          - integration_id: integration_id
+            id: id
+          - integration_id: integration_id
+            id: id
+          smss:
+          - phone: phone
+            name: name
+            id: id
+          - phone: phone
+            name: name
+            id: id
+        - emails:
+          - name: name
+            id: id
+            email: email
+          - name: name
+            id: id
+            email: email
+          project_id: project_id
+          webhooks:
+          - name: name
+            id: id
+            url: url
+          - name: name
+            id: id
+            url: url
+          name: name
+          id: id
+          slacks:
+          - integration_id: integration_id
+            id: id
+          - integration_id: integration_id
+            id: id
+          smss:
+          - phone: phone
+            name: name
+            id: id
+          - phone: phone
+            name: name
+            id: id
+      properties:
+        channels:
+          items:
+            $ref: '#/components/schemas/ChannelModel'
+          type: array
+          x-stoplight:
+            id: u3a6xr79ge6to
+      required:
+      - channels
+      type: object
+    v1_create_channel_request_emails_inner:
+      properties:
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: id2on0s88yok2
+        email:
+          type: string
+          x-stoplight:
+            id: jsibqnsa088ru
+      required:
+      - email
+      - name
+      type: object
+      x-stoplight:
+        id: x09550lxry8hv
+    v1_create_channel_request_webhooks_inner:
+      properties:
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: vrgh2hz4o0p23
+        url:
+          type: string
+          x-stoplight:
+            id: 6yxhm1vsovm8w
+      required:
+      - name
+      - url
+      type: object
+      x-stoplight:
+        id: po1teg40zk7xv
+    v1_create_channel_request_slacks_inner:
+      properties:
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: 7opdlx84e4g3i
+        integration_id:
+          type: string
+          x-stoplight:
+            id: ljv7z08fqrqxu
+      required:
+      - integration_id
+      - name
+      type: object
+      x-stoplight:
+        id: x9dpunxr32yj7
+    v1_create_channel_request_smss_inner:
+      properties:
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: dgbnu4zh6dp6o
+        phone:
+          type: string
+          x-stoplight:
+            id: 7iktikg2lqjit
+      required:
+      - name
+      - phone
+      type: object
+      x-stoplight:
+        id: q5mpf0h0zc71m
+    v1_create_channel_request:
+      properties:
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: tas9ez4lvl47b
+        emails:
+          items:
+            $ref: '#/components/schemas/v1_create_channel_request_emails_inner'
+          type: array
+          x-stoplight:
+            id: 5ficikbj9qmy1
+        webhooks:
+          items:
+            $ref: '#/components/schemas/v1_create_channel_request_webhooks_inner'
+          type: array
+          x-stoplight:
+            id: knzlj69wkd4a3
+        slacks:
+          items:
+            $ref: '#/components/schemas/v1_create_channel_request_slacks_inner'
+          type: array
+          x-stoplight:
+            id: vtpbtv75o8nek
+        smss:
+          items:
+            $ref: '#/components/schemas/v1_create_channel_request_smss_inner'
+          type: array
+          x-stoplight:
+            id: 4h4z4lwev1i19
+      required:
+      - name
+      type: object
+    v1_create_channel_201_response:
+      example:
+        channel:
+          emails:
+          - name: name
+            id: id
+            email: email
+          - name: name
+            id: id
+            email: email
+          project_id: project_id
+          webhooks:
+          - name: name
+            id: id
+            url: url
+          - name: name
+            id: id
+            url: url
+          name: name
+          id: id
+          slacks:
+          - integration_id: integration_id
+            id: id
+          - integration_id: integration_id
+            id: id
+          smss:
+          - phone: phone
+            name: name
+            id: id
+          - phone: phone
+            name: name
+            id: id
+      properties:
+        channel:
+          $ref: '#/components/schemas/ChannelModel'
+      required:
+      - channel
+      type: object
+    v1_update_channel_request_emails_inner:
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: e2vyuu3jh3336
+        email:
+          type: string
+          x-stoplight:
+            id: xyvdtaw11zrjq
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: vcoacvwjvycew
+      required:
+      - email
+      type: object
+      x-stoplight:
+        id: 0wb383jnt35b2
+    v1_update_channel_request_webhooks_inner:
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: j1fpp3s8erf3h
+        url:
+          type: string
+          x-stoplight:
+            id: mwth35ps0lced
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: umaqgxwl2raed
+      required:
+      - url
+      type: object
+      x-stoplight:
+        id: u5v5hreiuotn5
+    v1_update_channel_request_slacks_inner:
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: cfzd95lnbe88h
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: x3tovvpxt7029
+        integration_id:
+          type: string
+          x-stoplight:
+            id: s2r75lug9c1b2
+      required:
+      - integration_id
+      type: object
+      x-stoplight:
+        id: mnzbuyscwur1k
+    v1_update_channel_request_smss_inner:
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: z98aevhatces2
+        name:
+          maxLength: 24
+          minLength: 3
+          type: string
+          x-stoplight:
+            id: 2qna2y4vyzo6c
+        phone:
+          type: string
+          x-stoplight:
+            id: jgi1d8a7t11y3
+      required:
+      - phone
+      type: object
+      x-stoplight:
+        id: glt32u0hihj3r
+    v1_update_channel_request:
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: xal1yl9acvriu
+        emails:
+          items:
+            $ref: '#/components/schemas/v1_update_channel_request_emails_inner'
+          type: array
+          x-stoplight:
+            id: tccu5uz6utk27
+        webhooks:
+          items:
+            $ref: '#/components/schemas/v1_update_channel_request_webhooks_inner'
+          type: array
+          x-stoplight:
+            id: 4g0ik5oyu5sk0
+        slacks:
+          items:
+            $ref: '#/components/schemas/v1_update_channel_request_slacks_inner'
+          type: array
+          x-stoplight:
+            id: c9g29ht3pq56v
+        smss:
+          items:
+            $ref: '#/components/schemas/v1_update_channel_request_smss_inner'
+          type: array
+          x-stoplight:
+            id: nno54d7i98uov
+      type: object
+    v1_list_invitations_200_response:
+      example:
+        invitations:
+        - sent_at: 2000-01-23T04:56:07.000+00:00
+          role: owner
+          id: id
+          email: email
+          status: pending
+        - sent_at: 2000-01-23T04:56:07.000+00:00
+          role: owner
+          id: id
+          email: email
+          status: pending
+      properties:
+        invitations:
+          items:
+            $ref: '#/components/schemas/InvitationModel'
+          type: array
+          x-stoplight:
+            id: 0xe3e5lyvwkr9
+      required:
+      - invitations
+      type: object
+    v1_send_invitation_request:
+      properties:
+        email:
+          format: email
+          type: string
+          x-stoplight:
+            id: w43a0htbotqmr
+        role:
+          enum:
+          - owner
+          - manager
+          - member
+          type: string
+          x-stoplight:
+            id: 6jire6p0oj080
+      required:
+      - email
+      - role
+      type: object
+    v1_send_invitation_201_response:
+      example:
+        invitation:
+          sent_at: 2000-01-23T04:56:07.000+00:00
+          role: owner
+          id: id
+          email: email
+          status: pending
+      properties:
+        invitation:
+          $ref: '#/components/schemas/InvitationModel'
+      required:
+      - invitation
+      type: object
+    v1_accept_invitation_request:
+      properties:
+        secret_key:
+          type: string
+          x-stoplight:
+            id: e1etgtil6v837
+      required:
+      - secret_key
+      type: object
+    v1_organization_member_update_request:
+      properties:
+        role:
+          type: string
+          x-stoplight:
+            id: jxw414d2izv0r
+      required:
+      - role
+      type: object
+    v1_organization_member_update_200_response:
+      example:
+        member:
+          role: role
+          name: name
+          id: id
+          email: email
+      properties:
+        member:
+          $ref: '#/components/schemas/OrganizationMemberModel'
+      required:
+      - member
+      type: object
+    v1_project_member_create_request:
+      properties:
+        user_id:
+          type: string
+          x-stoplight:
+            id: xamk77b5mz6p9
+        role:
+          type: string
+          x-stoplight:
+            id: xhsv0qysc0080
+      required:
+      - role
+      - user_id
+      type: object
+    v1_project_member_create_200_response:
+      example:
+        member:
+          role: role
+          name: name
+          id: id
+          email: email
+      properties:
+        member:
+          $ref: '#/components/schemas/ProjectMemberModel'
+      required:
+      - member
+      type: object
+    v1_project_member_update_request:
+      properties:
+        role:
+          type: string
+          x-stoplight:
+            id: j7w5nzbvblj5e
+      required:
+      - role
+      type: object
+    v1_list_integrations_200_response:
+      example:
+        integrations:
+        - slack:
+            channel: channel
+            team_id: team_id
+            channel_id: channel_id
+            team_name: team_name
+          id: id
+          type: slack
+        - slack:
+            channel: channel
+            team_id: team_id
+            channel_id: channel_id
+            team_name: team_name
+          id: id
+          type: slack
+      properties:
+        integrations:
+          items:
+            $ref: '#/components/schemas/IntegrationModel'
+          type: array
+          x-stoplight:
+            id: uqwnogg5jqqnz
+      required:
+      - integrations
+      type: object
+    v1_my_user_200_response:
+      example:
+        user:
+          name: name
+          id: id
+          email: email
+          projects_role:
+          - role: owner
+            project_id: project_id
+          - role: owner
+            project_id: project_id
+          organizations_role:
+          - role: owner
+            organization_id: organization_id
+          - role: owner
+            organization_id: organization_id
+      properties:
+        user:
+          $ref: '#/components/schemas/UserModel'
+      required:
+      - user
+      type: object
+    v1_list_api_keys_200_response:
+      example:
+        api_keys:
+        - last_used: 2000-01-23T04:56:07.000+00:00
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          key: key
+        - last_used: 2000-01-23T04:56:07.000+00:00
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          key: key
+      properties:
+        api_keys:
+          items:
+            $ref: '#/components/schemas/ApiKeyModel'
+          type: array
+          x-stoplight:
+            id: boy0c9gj6xfhj
+      required:
+      - api_keys
+      type: object
+    v1_create_api_key_201_response:
+      example:
+        api_key:
+          last_used: 2000-01-23T04:56:07.000+00:00
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: id
+          key: key
+      properties:
+        api_key:
+          $ref: '#/components/schemas/ApiKeyModel'
+      required:
+      - api_key
+      type: object
+  securitySchemes:
+    apiToken:
+      scheme: basic
+      type: http
+x-stoplight:
+  id: wvgz1efa2qttj
+x-internal: false

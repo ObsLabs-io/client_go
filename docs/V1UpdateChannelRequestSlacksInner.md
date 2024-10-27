@@ -1,0 +1,103 @@
+# V1UpdateChannelRequestSlacksInner
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Id** | Pointer to **string** |  | [optional] 
+**Name** | Pointer to **string** |  | [optional] 
+**IntegrationId** | **string** |  | 
+
+## Methods
+
+### NewV1UpdateChannelRequestSlacksInner
+
+`func NewV1UpdateChannelRequestSlacksInner(integrationId string, ) *V1UpdateChannelRequestSlacksInner`
+
+NewV1UpdateChannelRequestSlacksInner instantiates a new V1UpdateChannelRequestSlacksInner object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewV1UpdateChannelRequestSlacksInnerWithDefaults
+
+`func NewV1UpdateChannelRequestSlacksInnerWithDefaults() *V1UpdateChannelRequestSlacksInner`
+
+NewV1UpdateChannelRequestSlacksInnerWithDefaults instantiates a new V1UpdateChannelRequestSlacksInner object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetId
+
+`func (o *V1UpdateChannelRequestSlacksInner) GetId() string`
+
+GetId returns the Id field if non-nil, zero value otherwise.
+
+### GetIdOk
+
+`func (o *V1UpdateChannelRequestSlacksInner) GetIdOk() (*string, bool)`
+
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetId
+
+`func (o *V1UpdateChannelRequestSlacksInner) SetId(v string)`
+
+SetId sets Id field to given value.
+
+### HasId
+
+`func (o *V1UpdateChannelRequestSlacksInner) HasId() bool`
+
+HasId returns a boolean if a field has been set.
+
+### GetName
+
+`func (o *V1UpdateChannelRequestSlacksInner) GetName() string`
+
+GetName returns the Name field if non-nil, zero value otherwise.
+
+### GetNameOk
+
+`func (o *V1UpdateChannelRequestSlacksInner) GetNameOk() (*string, bool)`
+
+GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetName
+
+`func (o *V1UpdateChannelRequestSlacksInner) SetName(v string)`
+
+SetName sets Name field to given value.
+
+### HasName
+
+`func (o *V1UpdateChannelRequestSlacksInner) HasName() bool`
+
+HasName returns a boolean if a field has been set.
+
+### GetIntegrationId
+
+`func (o *V1UpdateChannelRequestSlacksInner) GetIntegrationId() string`
+
+GetIntegrationId returns the IntegrationId field if non-nil, zero value otherwise.
+
+### GetIntegrationIdOk
+
+`func (o *V1UpdateChannelRequestSlacksInner) GetIntegrationIdOk() (*string, bool)`
+
+GetIntegrationIdOk returns a tuple with the IntegrationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIntegrationId
+
+`func (o *V1UpdateChannelRequestSlacksInner) SetIntegrationId(v string)`
+
+SetIntegrationId sets IntegrationId field to given value.
+
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

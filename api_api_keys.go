@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -20,11 +20,12 @@ import (
 	"strings"
 )
 
+
 // APIKeysAPIService APIKeysAPI service
 type APIKeysAPIService service
 
 type ApiV1CreateApiKeyRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *APIKeysAPIService
 }
 
@@ -37,25 +38,24 @@ V1CreateApiKey Create API Key
 
 Create API Key
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiV1CreateApiKeyRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiV1CreateApiKeyRequest
 */
 func (a *APIKeysAPIService) V1CreateApiKey(ctx context.Context) ApiV1CreateApiKeyRequest {
 	return ApiV1CreateApiKeyRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateApiKey201Response
+//  @return V1CreateApiKey201Response
 func (a *APIKeysAPIService) V1CreateApiKeyExecute(r ApiV1CreateApiKeyRequest) (*V1CreateApiKey201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateApiKey201Response
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateApiKey201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIKeysAPIService.V1CreateApiKey")
@@ -115,8 +115,8 @@ func (a *APIKeysAPIService) V1CreateApiKeyExecute(r ApiV1CreateApiKeyRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -126,8 +126,8 @@ func (a *APIKeysAPIService) V1CreateApiKeyExecute(r ApiV1CreateApiKeyRequest) (*
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -145,9 +145,9 @@ func (a *APIKeysAPIService) V1CreateApiKeyExecute(r ApiV1CreateApiKeyRequest) (*
 }
 
 type ApiV1DeleteApiKeyRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *APIKeysAPIService
-	kID        string
+	kID string
 }
 
 func (r ApiV1DeleteApiKeyRequest) Execute() (*http.Response, error) {
@@ -159,24 +159,24 @@ V1DeleteApiKey Delete API Keys
 
 Delete API Key
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param kID
-	@return ApiV1DeleteApiKeyRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param kID
+ @return ApiV1DeleteApiKeyRequest
 */
 func (a *APIKeysAPIService) V1DeleteApiKey(ctx context.Context, kID string) ApiV1DeleteApiKeyRequest {
 	return ApiV1DeleteApiKeyRequest{
 		ApiService: a,
-		ctx:        ctx,
-		kID:        kID,
+		ctx: ctx,
+		kID: kID,
 	}
 }
 
 // Execute executes the request
 func (a *APIKeysAPIService) V1DeleteApiKeyExecute(r ApiV1DeleteApiKeyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIKeysAPIService.V1DeleteApiKey")
@@ -237,8 +237,8 @@ func (a *APIKeysAPIService) V1DeleteApiKeyExecute(r ApiV1DeleteApiKeyRequest) (*
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -248,8 +248,8 @@ func (a *APIKeysAPIService) V1DeleteApiKeyExecute(r ApiV1DeleteApiKeyRequest) (*
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -258,7 +258,7 @@ func (a *APIKeysAPIService) V1DeleteApiKeyExecute(r ApiV1DeleteApiKeyRequest) (*
 }
 
 type ApiV1ListApiKeysRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *APIKeysAPIService
 }
 
@@ -269,25 +269,24 @@ func (r ApiV1ListApiKeysRequest) Execute() (*V1ListApiKeys200Response, *http.Res
 /*
 V1ListApiKeys List API Keys
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiV1ListApiKeysRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiV1ListApiKeysRequest
 */
 func (a *APIKeysAPIService) V1ListApiKeys(ctx context.Context) ApiV1ListApiKeysRequest {
 	return ApiV1ListApiKeysRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ListApiKeys200Response
+//  @return V1ListApiKeys200Response
 func (a *APIKeysAPIService) V1ListApiKeysExecute(r ApiV1ListApiKeysRequest) (*V1ListApiKeys200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ListApiKeys200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ListApiKeys200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIKeysAPIService.V1ListApiKeys")
@@ -347,8 +346,8 @@ func (a *APIKeysAPIService) V1ListApiKeysExecute(r ApiV1ListApiKeysRequest) (*V1
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -358,8 +357,8 @@ func (a *APIKeysAPIService) V1ListApiKeysExecute(r ApiV1ListApiKeysRequest) (*V1
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

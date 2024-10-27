@@ -43,7 +43,7 @@ servers:
 - description: PROD
   url: https://api.obslabs.io
 security:
-- apiToken: []
+- basicAuth: []
 paths:
   /v1/organizations:
     get:
@@ -5253,7 +5253,7 @@ components:
       - api_key
       type: object
   securitySchemes:
-    apiToken:
+    basicAuth:
       scheme: basic
       type: http
 x-stoplight:

@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -20,14 +20,15 @@ import (
 	"strings"
 )
 
+
 // InvitationsAPIService InvitationsAPI service
 type InvitationsAPIService service
 
 type ApiV1AcceptInvitationRequest struct {
-	ctx                       context.Context
-	ApiService                *InvitationsAPIService
-	oID                       string
-	invID                     string
+	ctx context.Context
+	ApiService *InvitationsAPIService
+	oID string
+	invID string
 	v1AcceptInvitationRequest *V1AcceptInvitationRequest
 }
 
@@ -43,26 +44,26 @@ func (r ApiV1AcceptInvitationRequest) Execute() (*http.Response, error) {
 /*
 V1AcceptInvitation Accept Invitation
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param invID Invitation ID
-	@return ApiV1AcceptInvitationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param invID Invitation ID
+ @return ApiV1AcceptInvitationRequest
 */
 func (a *InvitationsAPIService) V1AcceptInvitation(ctx context.Context, oID string, invID string) ApiV1AcceptInvitationRequest {
 	return ApiV1AcceptInvitationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		invID:      invID,
+		ctx: ctx,
+		oID: oID,
+		invID: invID,
 	}
 }
 
 // Execute executes the request
 func (a *InvitationsAPIService) V1AcceptInvitationExecute(r ApiV1AcceptInvitationRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodPost
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvitationsAPIService.V1AcceptInvitation")
@@ -126,8 +127,8 @@ func (a *InvitationsAPIService) V1AcceptInvitationExecute(r ApiV1AcceptInvitatio
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -137,8 +138,8 @@ func (a *InvitationsAPIService) V1AcceptInvitationExecute(r ApiV1AcceptInvitatio
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -148,8 +149,8 @@ func (a *InvitationsAPIService) V1AcceptInvitationExecute(r ApiV1AcceptInvitatio
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -158,10 +159,10 @@ func (a *InvitationsAPIService) V1AcceptInvitationExecute(r ApiV1AcceptInvitatio
 }
 
 type ApiV1GetInvitationRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *InvitationsAPIService
-	oID        string
-	invID      string
+	oID string
+	invID string
 }
 
 func (r ApiV1GetInvitationRequest) Execute() (*V1SendInvitation201Response, *http.Response, error) {
@@ -171,29 +172,28 @@ func (r ApiV1GetInvitationRequest) Execute() (*V1SendInvitation201Response, *htt
 /*
 V1GetInvitation Get Invitation
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param invID Invitation ID
-	@return ApiV1GetInvitationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param invID Invitation ID
+ @return ApiV1GetInvitationRequest
 */
 func (a *InvitationsAPIService) V1GetInvitation(ctx context.Context, oID string, invID string) ApiV1GetInvitationRequest {
 	return ApiV1GetInvitationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		invID:      invID,
+		ctx: ctx,
+		oID: oID,
+		invID: invID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1SendInvitation201Response
+//  @return V1SendInvitation201Response
 func (a *InvitationsAPIService) V1GetInvitationExecute(r ApiV1GetInvitationRequest) (*V1SendInvitation201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1SendInvitation201Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1SendInvitation201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvitationsAPIService.V1GetInvitation")
@@ -255,8 +255,8 @@ func (a *InvitationsAPIService) V1GetInvitationExecute(r ApiV1GetInvitationReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -266,8 +266,8 @@ func (a *InvitationsAPIService) V1GetInvitationExecute(r ApiV1GetInvitationReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -277,8 +277,8 @@ func (a *InvitationsAPIService) V1GetInvitationExecute(r ApiV1GetInvitationReque
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -296,9 +296,9 @@ func (a *InvitationsAPIService) V1GetInvitationExecute(r ApiV1GetInvitationReque
 }
 
 type ApiV1ListInvitationsRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *InvitationsAPIService
-	oID        string
+	oID string
 }
 
 func (r ApiV1ListInvitationsRequest) Execute() (*V1ListInvitations200Response, *http.Response, error) {
@@ -310,27 +310,26 @@ V1ListInvitations List Invitations
 
 List Invitations
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@return ApiV1ListInvitationsRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @return ApiV1ListInvitationsRequest
 */
 func (a *InvitationsAPIService) V1ListInvitations(ctx context.Context, oID string) ApiV1ListInvitationsRequest {
 	return ApiV1ListInvitationsRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
+		ctx: ctx,
+		oID: oID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ListInvitations200Response
+//  @return V1ListInvitations200Response
 func (a *InvitationsAPIService) V1ListInvitationsExecute(r ApiV1ListInvitationsRequest) (*V1ListInvitations200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ListInvitations200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ListInvitations200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvitationsAPIService.V1ListInvitations")
@@ -391,8 +390,8 @@ func (a *InvitationsAPIService) V1ListInvitationsExecute(r ApiV1ListInvitationsR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -402,8 +401,8 @@ func (a *InvitationsAPIService) V1ListInvitationsExecute(r ApiV1ListInvitationsR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -413,8 +412,8 @@ func (a *InvitationsAPIService) V1ListInvitationsExecute(r ApiV1ListInvitationsR
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -432,10 +431,10 @@ func (a *InvitationsAPIService) V1ListInvitationsExecute(r ApiV1ListInvitationsR
 }
 
 type ApiV1ResendInvitationRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *InvitationsAPIService
-	oID        string
-	invID      string
+	oID string
+	invID string
 }
 
 func (r ApiV1ResendInvitationRequest) Execute() (*V1SendInvitation201Response, *http.Response, error) {
@@ -447,29 +446,28 @@ V1ResendInvitation Resend Invitation
 
 Resend Invitation
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param invID Invitation ID
-	@return ApiV1ResendInvitationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param invID Invitation ID
+ @return ApiV1ResendInvitationRequest
 */
 func (a *InvitationsAPIService) V1ResendInvitation(ctx context.Context, oID string, invID string) ApiV1ResendInvitationRequest {
 	return ApiV1ResendInvitationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		invID:      invID,
+		ctx: ctx,
+		oID: oID,
+		invID: invID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1SendInvitation201Response
+//  @return V1SendInvitation201Response
 func (a *InvitationsAPIService) V1ResendInvitationExecute(r ApiV1ResendInvitationRequest) (*V1SendInvitation201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1SendInvitation201Response
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1SendInvitation201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvitationsAPIService.V1ResendInvitation")
@@ -531,8 +529,8 @@ func (a *InvitationsAPIService) V1ResendInvitationExecute(r ApiV1ResendInvitatio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -542,8 +540,8 @@ func (a *InvitationsAPIService) V1ResendInvitationExecute(r ApiV1ResendInvitatio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -553,8 +551,8 @@ func (a *InvitationsAPIService) V1ResendInvitationExecute(r ApiV1ResendInvitatio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -572,10 +570,10 @@ func (a *InvitationsAPIService) V1ResendInvitationExecute(r ApiV1ResendInvitatio
 }
 
 type ApiV1RevokeInvitationRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *InvitationsAPIService
-	oID        string
-	invID      string
+	oID string
+	invID string
 }
 
 func (r ApiV1RevokeInvitationRequest) Execute() (*http.Response, error) {
@@ -585,26 +583,26 @@ func (r ApiV1RevokeInvitationRequest) Execute() (*http.Response, error) {
 /*
 V1RevokeInvitation Revoke Invitation
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param invID Invitation ID
-	@return ApiV1RevokeInvitationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param invID Invitation ID
+ @return ApiV1RevokeInvitationRequest
 */
 func (a *InvitationsAPIService) V1RevokeInvitation(ctx context.Context, oID string, invID string) ApiV1RevokeInvitationRequest {
 	return ApiV1RevokeInvitationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		invID:      invID,
+		ctx: ctx,
+		oID: oID,
+		invID: invID,
 	}
 }
 
 // Execute executes the request
 func (a *InvitationsAPIService) V1RevokeInvitationExecute(r ApiV1RevokeInvitationRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvitationsAPIService.V1RevokeInvitation")
@@ -666,8 +664,8 @@ func (a *InvitationsAPIService) V1RevokeInvitationExecute(r ApiV1RevokeInvitatio
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -677,8 +675,8 @@ func (a *InvitationsAPIService) V1RevokeInvitationExecute(r ApiV1RevokeInvitatio
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -688,8 +686,8 @@ func (a *InvitationsAPIService) V1RevokeInvitationExecute(r ApiV1RevokeInvitatio
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -699,8 +697,8 @@ func (a *InvitationsAPIService) V1RevokeInvitationExecute(r ApiV1RevokeInvitatio
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -709,9 +707,9 @@ func (a *InvitationsAPIService) V1RevokeInvitationExecute(r ApiV1RevokeInvitatio
 }
 
 type ApiV1SendInvitationRequest struct {
-	ctx                     context.Context
-	ApiService              *InvitationsAPIService
-	oID                     string
+	ctx context.Context
+	ApiService *InvitationsAPIService
+	oID string
 	v1SendInvitationRequest *V1SendInvitationRequest
 }
 
@@ -729,27 +727,26 @@ V1SendInvitation Send Invitation
 
 Send Invitation
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@return ApiV1SendInvitationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @return ApiV1SendInvitationRequest
 */
 func (a *InvitationsAPIService) V1SendInvitation(ctx context.Context, oID string) ApiV1SendInvitationRequest {
 	return ApiV1SendInvitationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
+		ctx: ctx,
+		oID: oID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1SendInvitation201Response
+//  @return V1SendInvitation201Response
 func (a *InvitationsAPIService) V1SendInvitationExecute(r ApiV1SendInvitationRequest) (*V1SendInvitation201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1SendInvitation201Response
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1SendInvitation201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "InvitationsAPIService.V1SendInvitation")
@@ -812,8 +809,8 @@ func (a *InvitationsAPIService) V1SendInvitationExecute(r ApiV1SendInvitationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -823,8 +820,8 @@ func (a *InvitationsAPIService) V1SendInvitationExecute(r ApiV1SendInvitationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -834,8 +831,8 @@ func (a *InvitationsAPIService) V1SendInvitationExecute(r ApiV1SendInvitationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -845,8 +842,8 @@ func (a *InvitationsAPIService) V1SendInvitationExecute(r ApiV1SendInvitationReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

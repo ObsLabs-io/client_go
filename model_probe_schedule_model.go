@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -21,13 +21,13 @@ var _ MappedNullable = &ProbeScheduleModel{}
 
 // ProbeScheduleModel struct for ProbeScheduleModel
 type ProbeScheduleModel struct {
-	Type             string `json:"type"`
-	FailureThreshold int32  `json:"failure_threshold"`
-	SuccessThreshold int32  `json:"success_threshold"`
+	Type string `json:"type"`
+	FailureThreshold int32 `json:"failure_threshold"`
+	SuccessThreshold int32 `json:"success_threshold"`
 	// Required if type is \"cron\"
 	Expression *string `json:"expression,omitempty"`
 	// Required if type is \"period\"
-	PeriodSeconds        *int32 `json:"period_seconds,omitempty"`
+	PeriodSeconds *int32 `json:"period_seconds,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -198,7 +198,7 @@ func (o *ProbeScheduleModel) SetPeriodSeconds(v int32) {
 }
 
 func (o ProbeScheduleModel) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -239,10 +239,10 @@ func (o *ProbeScheduleModel) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err
+		return err;
 	}
 
-	for _, requiredProperty := range requiredProperties {
+	for _, requiredProperty := range(requiredProperties) {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -307,3 +307,5 @@ func (v *NullableProbeScheduleModel) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

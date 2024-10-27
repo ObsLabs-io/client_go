@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -20,14 +20,15 @@ import (
 	"strings"
 )
 
+
 // ProbesAPIService ProbesAPI service
 type ProbesAPIService service
 
 type ApiV1CreateProbeRequest struct {
-	ctx                  context.Context
-	ApiService           *ProbesAPIService
-	oID                  string
-	pID                  string
+	ctx context.Context
+	ApiService *ProbesAPIService
+	oID string
+	pID string
 	v1CreateProbeRequest *V1CreateProbeRequest
 }
 
@@ -46,29 +47,28 @@ V1CreateProbe Create Probe
 
 Create Probe
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@return ApiV1CreateProbeRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @return ApiV1CreateProbeRequest
 */
 func (a *ProbesAPIService) V1CreateProbe(ctx context.Context, oID string, pID string) ApiV1CreateProbeRequest {
 	return ApiV1CreateProbeRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateProbe201Response
+//  @return V1CreateProbe201Response
 func (a *ProbesAPIService) V1CreateProbeExecute(r ApiV1CreateProbeRequest) (*V1CreateProbe201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateProbe201Response
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateProbe201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProbesAPIService.V1CreateProbe")
@@ -132,8 +132,8 @@ func (a *ProbesAPIService) V1CreateProbeExecute(r ApiV1CreateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -143,8 +143,8 @@ func (a *ProbesAPIService) V1CreateProbeExecute(r ApiV1CreateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -154,8 +154,8 @@ func (a *ProbesAPIService) V1CreateProbeExecute(r ApiV1CreateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -165,8 +165,8 @@ func (a *ProbesAPIService) V1CreateProbeExecute(r ApiV1CreateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -176,8 +176,8 @@ func (a *ProbesAPIService) V1CreateProbeExecute(r ApiV1CreateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -195,11 +195,11 @@ func (a *ProbesAPIService) V1CreateProbeExecute(r ApiV1CreateProbeRequest) (*V1C
 }
 
 type ApiV1DeleteProbeRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *ProbesAPIService
-	oID        string
-	pID        string
-	prID       string
+	oID string
+	pID string
+	prID string
 }
 
 func (r ApiV1DeleteProbeRequest) Execute() (*http.Response, error) {
@@ -209,28 +209,28 @@ func (r ApiV1DeleteProbeRequest) Execute() (*http.Response, error) {
 /*
 V1DeleteProbe Delete Probe
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@param prID Probe ID
-	@return ApiV1DeleteProbeRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @param prID Probe ID
+ @return ApiV1DeleteProbeRequest
 */
 func (a *ProbesAPIService) V1DeleteProbe(ctx context.Context, oID string, pID string, prID string) ApiV1DeleteProbeRequest {
 	return ApiV1DeleteProbeRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
-		prID:       prID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
+		prID: prID,
 	}
 }
 
 // Execute executes the request
 func (a *ProbesAPIService) V1DeleteProbeExecute(r ApiV1DeleteProbeRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProbesAPIService.V1DeleteProbe")
@@ -293,8 +293,8 @@ func (a *ProbesAPIService) V1DeleteProbeExecute(r ApiV1DeleteProbeRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -304,8 +304,8 @@ func (a *ProbesAPIService) V1DeleteProbeExecute(r ApiV1DeleteProbeRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -315,8 +315,8 @@ func (a *ProbesAPIService) V1DeleteProbeExecute(r ApiV1DeleteProbeRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -326,8 +326,8 @@ func (a *ProbesAPIService) V1DeleteProbeExecute(r ApiV1DeleteProbeRequest) (*htt
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -336,11 +336,11 @@ func (a *ProbesAPIService) V1DeleteProbeExecute(r ApiV1DeleteProbeRequest) (*htt
 }
 
 type ApiV1GetProbeRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *ProbesAPIService
-	oID        string
-	pID        string
-	prID       string
+	oID string
+	pID string
+	prID string
 }
 
 func (r ApiV1GetProbeRequest) Execute() (*V1CreateProbe201Response, *http.Response, error) {
@@ -350,31 +350,30 @@ func (r ApiV1GetProbeRequest) Execute() (*V1CreateProbe201Response, *http.Respon
 /*
 V1GetProbe Get Probe
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@param prID Probe ID
-	@return ApiV1GetProbeRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @param prID Probe ID
+ @return ApiV1GetProbeRequest
 */
 func (a *ProbesAPIService) V1GetProbe(ctx context.Context, oID string, pID string, prID string) ApiV1GetProbeRequest {
 	return ApiV1GetProbeRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
-		prID:       prID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
+		prID: prID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateProbe201Response
+//  @return V1CreateProbe201Response
 func (a *ProbesAPIService) V1GetProbeExecute(r ApiV1GetProbeRequest) (*V1CreateProbe201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateProbe201Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateProbe201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProbesAPIService.V1GetProbe")
@@ -437,8 +436,8 @@ func (a *ProbesAPIService) V1GetProbeExecute(r ApiV1GetProbeRequest) (*V1CreateP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -448,8 +447,8 @@ func (a *ProbesAPIService) V1GetProbeExecute(r ApiV1GetProbeRequest) (*V1CreateP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -459,8 +458,8 @@ func (a *ProbesAPIService) V1GetProbeExecute(r ApiV1GetProbeRequest) (*V1CreateP
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -478,10 +477,10 @@ func (a *ProbesAPIService) V1GetProbeExecute(r ApiV1GetProbeRequest) (*V1CreateP
 }
 
 type ApiV1ListProbesRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *ProbesAPIService
-	oID        string
-	pID        string
+	oID string
+	pID string
 }
 
 func (r ApiV1ListProbesRequest) Execute() (*V1ListProbes200Response, *http.Response, error) {
@@ -493,29 +492,28 @@ V1ListProbes List Probes
 
 List probes
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@return ApiV1ListProbesRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @return ApiV1ListProbesRequest
 */
 func (a *ProbesAPIService) V1ListProbes(ctx context.Context, oID string, pID string) ApiV1ListProbesRequest {
 	return ApiV1ListProbesRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ListProbes200Response
+//  @return V1ListProbes200Response
 func (a *ProbesAPIService) V1ListProbesExecute(r ApiV1ListProbesRequest) (*V1ListProbes200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ListProbes200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ListProbes200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProbesAPIService.V1ListProbes")
@@ -577,8 +575,8 @@ func (a *ProbesAPIService) V1ListProbesExecute(r ApiV1ListProbesRequest) (*V1Lis
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -588,8 +586,8 @@ func (a *ProbesAPIService) V1ListProbesExecute(r ApiV1ListProbesRequest) (*V1Lis
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -599,8 +597,8 @@ func (a *ProbesAPIService) V1ListProbesExecute(r ApiV1ListProbesRequest) (*V1Lis
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -610,8 +608,8 @@ func (a *ProbesAPIService) V1ListProbesExecute(r ApiV1ListProbesRequest) (*V1Lis
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -629,11 +627,11 @@ func (a *ProbesAPIService) V1ListProbesExecute(r ApiV1ListProbesRequest) (*V1Lis
 }
 
 type ApiV1UpdateProbeRequest struct {
-	ctx                  context.Context
-	ApiService           *ProbesAPIService
-	oID                  string
-	pID                  string
-	prID                 string
+	ctx context.Context
+	ApiService *ProbesAPIService
+	oID string
+	pID string
+	prID string
 	v1UpdateProbeRequest *V1UpdateProbeRequest
 }
 
@@ -650,31 +648,30 @@ func (r ApiV1UpdateProbeRequest) Execute() (*V1CreateProbe201Response, *http.Res
 /*
 V1UpdateProbe Update Probe
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@param prID Probe ID
-	@return ApiV1UpdateProbeRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @param prID Probe ID
+ @return ApiV1UpdateProbeRequest
 */
 func (a *ProbesAPIService) V1UpdateProbe(ctx context.Context, oID string, pID string, prID string) ApiV1UpdateProbeRequest {
 	return ApiV1UpdateProbeRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
-		prID:       prID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
+		prID: prID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateProbe201Response
+//  @return V1CreateProbe201Response
 func (a *ProbesAPIService) V1UpdateProbeExecute(r ApiV1UpdateProbeRequest) (*V1CreateProbe201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPatch
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateProbe201Response
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateProbe201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProbesAPIService.V1UpdateProbe")
@@ -739,8 +736,8 @@ func (a *ProbesAPIService) V1UpdateProbeExecute(r ApiV1UpdateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -750,8 +747,8 @@ func (a *ProbesAPIService) V1UpdateProbeExecute(r ApiV1UpdateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -761,8 +758,8 @@ func (a *ProbesAPIService) V1UpdateProbeExecute(r ApiV1UpdateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -772,8 +769,8 @@ func (a *ProbesAPIService) V1UpdateProbeExecute(r ApiV1UpdateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -783,8 +780,8 @@ func (a *ProbesAPIService) V1UpdateProbeExecute(r ApiV1UpdateProbeRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

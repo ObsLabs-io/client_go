@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -20,15 +20,16 @@ import (
 	"strings"
 )
 
+
 // IntegrationsAPIService IntegrationsAPI service
 type IntegrationsAPIService service
 
 type ApiV1DeleteIntegrationsRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *IntegrationsAPIService
-	oID        string
-	pID        string
-	intID      string
+	oID string
+	pID string
+	intID string
 }
 
 func (r ApiV1DeleteIntegrationsRequest) Execute() (*http.Response, error) {
@@ -38,28 +39,28 @@ func (r ApiV1DeleteIntegrationsRequest) Execute() (*http.Response, error) {
 /*
 V1DeleteIntegrations Delete Integration
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@param intID Integration ID
-	@return ApiV1DeleteIntegrationsRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @param intID Integration ID
+ @return ApiV1DeleteIntegrationsRequest
 */
 func (a *IntegrationsAPIService) V1DeleteIntegrations(ctx context.Context, oID string, pID string, intID string) ApiV1DeleteIntegrationsRequest {
 	return ApiV1DeleteIntegrationsRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
-		intID:      intID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
+		intID: intID,
 	}
 }
 
 // Execute executes the request
 func (a *IntegrationsAPIService) V1DeleteIntegrationsExecute(r ApiV1DeleteIntegrationsRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationsAPIService.V1DeleteIntegrations")
@@ -122,8 +123,8 @@ func (a *IntegrationsAPIService) V1DeleteIntegrationsExecute(r ApiV1DeleteIntegr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -133,8 +134,8 @@ func (a *IntegrationsAPIService) V1DeleteIntegrationsExecute(r ApiV1DeleteIntegr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -144,8 +145,8 @@ func (a *IntegrationsAPIService) V1DeleteIntegrationsExecute(r ApiV1DeleteIntegr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -155,8 +156,8 @@ func (a *IntegrationsAPIService) V1DeleteIntegrationsExecute(r ApiV1DeleteIntegr
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -165,10 +166,10 @@ func (a *IntegrationsAPIService) V1DeleteIntegrationsExecute(r ApiV1DeleteIntegr
 }
 
 type ApiV1ListIntegrationsRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *IntegrationsAPIService
-	oID        string
-	pID        string
+	oID string
+	pID string
 }
 
 func (r ApiV1ListIntegrationsRequest) Execute() (*V1ListIntegrations200Response, *http.Response, error) {
@@ -178,29 +179,28 @@ func (r ApiV1ListIntegrationsRequest) Execute() (*V1ListIntegrations200Response,
 /*
 V1ListIntegrations List Integrations
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@return ApiV1ListIntegrationsRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @return ApiV1ListIntegrationsRequest
 */
 func (a *IntegrationsAPIService) V1ListIntegrations(ctx context.Context, oID string, pID string) ApiV1ListIntegrationsRequest {
 	return ApiV1ListIntegrationsRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ListIntegrations200Response
+//  @return V1ListIntegrations200Response
 func (a *IntegrationsAPIService) V1ListIntegrationsExecute(r ApiV1ListIntegrationsRequest) (*V1ListIntegrations200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ListIntegrations200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ListIntegrations200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "IntegrationsAPIService.V1ListIntegrations")
@@ -262,8 +262,8 @@ func (a *IntegrationsAPIService) V1ListIntegrationsExecute(r ApiV1ListIntegratio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -273,8 +273,8 @@ func (a *IntegrationsAPIService) V1ListIntegrationsExecute(r ApiV1ListIntegratio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

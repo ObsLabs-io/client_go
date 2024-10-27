@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -20,13 +20,14 @@ import (
 	"strings"
 )
 
+
 // ProjectsAPIService ProjectsAPI service
 type ProjectsAPIService service
 
 type ApiV1CreateProjectRequest struct {
-	ctx                    context.Context
-	ApiService             *ProjectsAPIService
-	oID                    string
+	ctx context.Context
+	ApiService *ProjectsAPIService
+	oID string
 	v1CreateProjectRequest *V1CreateProjectRequest
 }
 
@@ -44,27 +45,26 @@ V1CreateProject Create Project
 
 Create Project
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@return ApiV1CreateProjectRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @return ApiV1CreateProjectRequest
 */
 func (a *ProjectsAPIService) V1CreateProject(ctx context.Context, oID string) ApiV1CreateProjectRequest {
 	return ApiV1CreateProjectRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
+		ctx: ctx,
+		oID: oID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateProject201Response
+//  @return V1CreateProject201Response
 func (a *ProjectsAPIService) V1CreateProjectExecute(r ApiV1CreateProjectRequest) (*V1CreateProject201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateProject201Response
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateProject201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1CreateProject")
@@ -127,8 +127,8 @@ func (a *ProjectsAPIService) V1CreateProjectExecute(r ApiV1CreateProjectRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -138,8 +138,8 @@ func (a *ProjectsAPIService) V1CreateProjectExecute(r ApiV1CreateProjectRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -149,8 +149,8 @@ func (a *ProjectsAPIService) V1CreateProjectExecute(r ApiV1CreateProjectRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -168,10 +168,10 @@ func (a *ProjectsAPIService) V1CreateProjectExecute(r ApiV1CreateProjectRequest)
 }
 
 type ApiV1DeleteProjectRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *ProjectsAPIService
-	oID        string
-	pID        string
+	oID string
+	pID string
 }
 
 func (r ApiV1DeleteProjectRequest) Execute() (*http.Response, error) {
@@ -181,26 +181,26 @@ func (r ApiV1DeleteProjectRequest) Execute() (*http.Response, error) {
 /*
 V1DeleteProject Delete Project
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@return ApiV1DeleteProjectRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @return ApiV1DeleteProjectRequest
 */
 func (a *ProjectsAPIService) V1DeleteProject(ctx context.Context, oID string, pID string) ApiV1DeleteProjectRequest {
 	return ApiV1DeleteProjectRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
 	}
 }
 
 // Execute executes the request
 func (a *ProjectsAPIService) V1DeleteProjectExecute(r ApiV1DeleteProjectRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1DeleteProject")
@@ -262,8 +262,8 @@ func (a *ProjectsAPIService) V1DeleteProjectExecute(r ApiV1DeleteProjectRequest)
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -273,8 +273,8 @@ func (a *ProjectsAPIService) V1DeleteProjectExecute(r ApiV1DeleteProjectRequest)
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -284,8 +284,8 @@ func (a *ProjectsAPIService) V1DeleteProjectExecute(r ApiV1DeleteProjectRequest)
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -295,8 +295,8 @@ func (a *ProjectsAPIService) V1DeleteProjectExecute(r ApiV1DeleteProjectRequest)
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -305,10 +305,10 @@ func (a *ProjectsAPIService) V1DeleteProjectExecute(r ApiV1DeleteProjectRequest)
 }
 
 type ApiV1GetProjectRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *ProjectsAPIService
-	oID        string
-	pID        string
+	oID string
+	pID string
 }
 
 func (r ApiV1GetProjectRequest) Execute() (*V1CreateProject201Response, *http.Response, error) {
@@ -318,29 +318,28 @@ func (r ApiV1GetProjectRequest) Execute() (*V1CreateProject201Response, *http.Re
 /*
 V1GetProject Get Project
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@return ApiV1GetProjectRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @return ApiV1GetProjectRequest
 */
 func (a *ProjectsAPIService) V1GetProject(ctx context.Context, oID string, pID string) ApiV1GetProjectRequest {
 	return ApiV1GetProjectRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateProject201Response
+//  @return V1CreateProject201Response
 func (a *ProjectsAPIService) V1GetProjectExecute(r ApiV1GetProjectRequest) (*V1CreateProject201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateProject201Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateProject201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1GetProject")
@@ -402,8 +401,8 @@ func (a *ProjectsAPIService) V1GetProjectExecute(r ApiV1GetProjectRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -413,8 +412,8 @@ func (a *ProjectsAPIService) V1GetProjectExecute(r ApiV1GetProjectRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -424,8 +423,8 @@ func (a *ProjectsAPIService) V1GetProjectExecute(r ApiV1GetProjectRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -435,8 +434,8 @@ func (a *ProjectsAPIService) V1GetProjectExecute(r ApiV1GetProjectRequest) (*V1C
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -454,9 +453,9 @@ func (a *ProjectsAPIService) V1GetProjectExecute(r ApiV1GetProjectRequest) (*V1C
 }
 
 type ApiV1ListProjectsRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *ProjectsAPIService
-	oID        string
+	oID string
 }
 
 func (r ApiV1ListProjectsRequest) Execute() (*V1ListProjects200Response, *http.Response, error) {
@@ -468,27 +467,26 @@ V1ListProjects List Projects
 
 List Projects
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@return ApiV1ListProjectsRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @return ApiV1ListProjectsRequest
 */
 func (a *ProjectsAPIService) V1ListProjects(ctx context.Context, oID string) ApiV1ListProjectsRequest {
 	return ApiV1ListProjectsRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
+		ctx: ctx,
+		oID: oID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ListProjects200Response
+//  @return V1ListProjects200Response
 func (a *ProjectsAPIService) V1ListProjectsExecute(r ApiV1ListProjectsRequest) (*V1ListProjects200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ListProjects200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ListProjects200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1ListProjects")
@@ -549,8 +547,8 @@ func (a *ProjectsAPIService) V1ListProjectsExecute(r ApiV1ListProjectsRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -560,8 +558,8 @@ func (a *ProjectsAPIService) V1ListProjectsExecute(r ApiV1ListProjectsRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -571,8 +569,8 @@ func (a *ProjectsAPIService) V1ListProjectsExecute(r ApiV1ListProjectsRequest) (
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -590,10 +588,10 @@ func (a *ProjectsAPIService) V1ListProjectsExecute(r ApiV1ListProjectsRequest) (
 }
 
 type ApiV1ProjectMemberCreateRequest struct {
-	ctx                          context.Context
-	ApiService                   *ProjectsAPIService
-	oID                          string
-	pID                          string
+	ctx context.Context
+	ApiService *ProjectsAPIService
+	oID string
+	pID string
 	v1ProjectMemberCreateRequest *V1ProjectMemberCreateRequest
 }
 
@@ -611,29 +609,28 @@ V1ProjectMemberCreate Add Project Member
 
 Add Organization Member to Project
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@return ApiV1ProjectMemberCreateRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @return ApiV1ProjectMemberCreateRequest
 */
 func (a *ProjectsAPIService) V1ProjectMemberCreate(ctx context.Context, oID string, pID string) ApiV1ProjectMemberCreateRequest {
 	return ApiV1ProjectMemberCreateRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ProjectMemberCreate200Response
+//  @return V1ProjectMemberCreate200Response
 func (a *ProjectsAPIService) V1ProjectMemberCreateExecute(r ApiV1ProjectMemberCreateRequest) (*V1ProjectMemberCreate200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ProjectMemberCreate200Response
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ProjectMemberCreate200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1ProjectMemberCreate")
@@ -697,8 +694,8 @@ func (a *ProjectsAPIService) V1ProjectMemberCreateExecute(r ApiV1ProjectMemberCr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -708,8 +705,8 @@ func (a *ProjectsAPIService) V1ProjectMemberCreateExecute(r ApiV1ProjectMemberCr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -719,8 +716,8 @@ func (a *ProjectsAPIService) V1ProjectMemberCreateExecute(r ApiV1ProjectMemberCr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -730,8 +727,8 @@ func (a *ProjectsAPIService) V1ProjectMemberCreateExecute(r ApiV1ProjectMemberCr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -741,8 +738,8 @@ func (a *ProjectsAPIService) V1ProjectMemberCreateExecute(r ApiV1ProjectMemberCr
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -760,11 +757,11 @@ func (a *ProjectsAPIService) V1ProjectMemberCreateExecute(r ApiV1ProjectMemberCr
 }
 
 type ApiV1ProjectMemberDeleteRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *ProjectsAPIService
-	oID        string
-	pID        string
-	uID        string
+	oID string
+	pID string
+	uID string
 }
 
 func (r ApiV1ProjectMemberDeleteRequest) Execute() (*http.Response, error) {
@@ -776,28 +773,28 @@ V1ProjectMemberDelete Delete Project Member
 
 Delete Project Member
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@param uID User ID
-	@return ApiV1ProjectMemberDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @param uID User ID
+ @return ApiV1ProjectMemberDeleteRequest
 */
 func (a *ProjectsAPIService) V1ProjectMemberDelete(ctx context.Context, oID string, pID string, uID string) ApiV1ProjectMemberDeleteRequest {
 	return ApiV1ProjectMemberDeleteRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
-		uID:        uID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
+		uID: uID,
 	}
 }
 
 // Execute executes the request
 func (a *ProjectsAPIService) V1ProjectMemberDeleteExecute(r ApiV1ProjectMemberDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1ProjectMemberDelete")
@@ -860,8 +857,8 @@ func (a *ProjectsAPIService) V1ProjectMemberDeleteExecute(r ApiV1ProjectMemberDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -871,8 +868,8 @@ func (a *ProjectsAPIService) V1ProjectMemberDeleteExecute(r ApiV1ProjectMemberDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -882,8 +879,8 @@ func (a *ProjectsAPIService) V1ProjectMemberDeleteExecute(r ApiV1ProjectMemberDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -893,8 +890,8 @@ func (a *ProjectsAPIService) V1ProjectMemberDeleteExecute(r ApiV1ProjectMemberDe
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -903,11 +900,11 @@ func (a *ProjectsAPIService) V1ProjectMemberDeleteExecute(r ApiV1ProjectMemberDe
 }
 
 type ApiV1ProjectMemberUpdateRequest struct {
-	ctx                          context.Context
-	ApiService                   *ProjectsAPIService
-	oID                          string
-	pID                          string
-	uID                          string
+	ctx context.Context
+	ApiService *ProjectsAPIService
+	oID string
+	pID string
+	uID string
 	v1ProjectMemberUpdateRequest *V1ProjectMemberUpdateRequest
 }
 
@@ -925,31 +922,30 @@ V1ProjectMemberUpdate Update Project Member
 
 Update Project Member
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@param uID User ID
-	@return ApiV1ProjectMemberUpdateRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @param uID User ID
+ @return ApiV1ProjectMemberUpdateRequest
 */
 func (a *ProjectsAPIService) V1ProjectMemberUpdate(ctx context.Context, oID string, pID string, uID string) ApiV1ProjectMemberUpdateRequest {
 	return ApiV1ProjectMemberUpdateRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
-		uID:        uID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
+		uID: uID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ProjectMemberCreate200Response
+//  @return V1ProjectMemberCreate200Response
 func (a *ProjectsAPIService) V1ProjectMemberUpdateExecute(r ApiV1ProjectMemberUpdateRequest) (*V1ProjectMemberCreate200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPatch
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ProjectMemberCreate200Response
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ProjectMemberCreate200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1ProjectMemberUpdate")
@@ -1014,8 +1010,8 @@ func (a *ProjectsAPIService) V1ProjectMemberUpdateExecute(r ApiV1ProjectMemberUp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -1025,8 +1021,8 @@ func (a *ProjectsAPIService) V1ProjectMemberUpdateExecute(r ApiV1ProjectMemberUp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -1036,8 +1032,8 @@ func (a *ProjectsAPIService) V1ProjectMemberUpdateExecute(r ApiV1ProjectMemberUp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1047,8 +1043,8 @@ func (a *ProjectsAPIService) V1ProjectMemberUpdateExecute(r ApiV1ProjectMemberUp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1058,8 +1054,8 @@ func (a *ProjectsAPIService) V1ProjectMemberUpdateExecute(r ApiV1ProjectMemberUp
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -1077,10 +1073,10 @@ func (a *ProjectsAPIService) V1ProjectMemberUpdateExecute(r ApiV1ProjectMemberUp
 }
 
 type ApiV1UpdateProjectRequest struct {
-	ctx                    context.Context
-	ApiService             *ProjectsAPIService
-	oID                    string
-	pID                    string
+	ctx context.Context
+	ApiService *ProjectsAPIService
+	oID string
+	pID string
 	v1UpdateProjectRequest *V1UpdateProjectRequest
 }
 
@@ -1097,29 +1093,28 @@ func (r ApiV1UpdateProjectRequest) Execute() (*V1UpdateProject200Response, *http
 /*
 V1UpdateProject Update Project
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param pID Project ID
-	@return ApiV1UpdateProjectRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param pID Project ID
+ @return ApiV1UpdateProjectRequest
 */
 func (a *ProjectsAPIService) V1UpdateProject(ctx context.Context, oID string, pID string) ApiV1UpdateProjectRequest {
 	return ApiV1UpdateProjectRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		pID:        pID,
+		ctx: ctx,
+		oID: oID,
+		pID: pID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1UpdateProject200Response
+//  @return V1UpdateProject200Response
 func (a *ProjectsAPIService) V1UpdateProjectExecute(r ApiV1UpdateProjectRequest) (*V1UpdateProject200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPatch
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1UpdateProject200Response
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1UpdateProject200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ProjectsAPIService.V1UpdateProject")
@@ -1183,8 +1178,8 @@ func (a *ProjectsAPIService) V1UpdateProjectExecute(r ApiV1UpdateProjectRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -1194,8 +1189,8 @@ func (a *ProjectsAPIService) V1UpdateProjectExecute(r ApiV1UpdateProjectRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -1205,8 +1200,8 @@ func (a *ProjectsAPIService) V1UpdateProjectExecute(r ApiV1UpdateProjectRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -1216,8 +1211,8 @@ func (a *ProjectsAPIService) V1UpdateProjectExecute(r ApiV1UpdateProjectRequest)
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

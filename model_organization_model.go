@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -13,8 +13,8 @@ package client_go
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
+	"fmt"
 )
 
 // checks if the OrganizationModel type satisfies the MappedNullable interface at compile time
@@ -22,13 +22,13 @@ var _ MappedNullable = &OrganizationModel{}
 
 // OrganizationModel struct for OrganizationModel
 type OrganizationModel struct {
-	Id                   string                        `json:"id"`
-	Name                 string                        `json:"name"`
-	IsTrial              bool                          `json:"is_trial"`
-	TrialEndsAt          *time.Time                    `json:"trial_ends_at,omitempty"`
-	Members              []OrganizationMemberModel     `json:"members"`
-	Projects             []OrganizationProjectModel    `json:"projects"`
-	Subscription         OrganizationSubscriptionModel `json:"subscription,omitempty"`
+	Id string `json:"id"`
+	Name string `json:"name"`
+	IsTrial bool `json:"is_trial"`
+	TrialEndsAt *time.Time `json:"trial_ends_at,omitempty"`
+	Members []OrganizationMemberModel `json:"members"`
+	Projects []OrganizationProjectModel `json:"projects"`
+	Subscription OrganizationSubscriptionModel `json:"subscription,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -241,7 +241,7 @@ func (o *OrganizationModel) SetSubscription(v OrganizationSubscriptionModel) {
 }
 
 func (o OrganizationModel) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -286,10 +286,10 @@ func (o *OrganizationModel) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err
+		return err;
 	}
 
-	for _, requiredProperty := range requiredProperties {
+	for _, requiredProperty := range(requiredProperties) {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -356,3 +356,5 @@ func (v *NullableOrganizationModel) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

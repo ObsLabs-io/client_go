@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -21,11 +21,11 @@ var _ MappedNullable = &V1CreateChannelRequest{}
 
 // V1CreateChannelRequest struct for V1CreateChannelRequest
 type V1CreateChannelRequest struct {
-	Name                 string                                `json:"name"`
-	Emails               []V1CreateChannelRequestEmailsInner   `json:"emails,omitempty"`
-	Webhooks             []V1CreateChannelRequestWebhooksInner `json:"webhooks,omitempty"`
-	Slacks               []V1CreateChannelRequestSlacksInner   `json:"slacks,omitempty"`
-	Smss                 []V1CreateChannelRequestSmssInner     `json:"smss,omitempty"`
+	Name string `json:"name"`
+	Emails []V1CreateChannelRequestEmailsInner `json:"emails,omitempty"`
+	Webhooks []V1CreateChannelRequestWebhooksInner `json:"webhooks,omitempty"`
+	Slacks []V1CreateChannelRequestSlacksInner `json:"slacks,omitempty"`
+	Smss []V1CreateChannelRequestSmssInner `json:"smss,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -202,7 +202,7 @@ func (o *V1CreateChannelRequest) SetSmss(v []V1CreateChannelRequestSmssInner) {
 }
 
 func (o V1CreateChannelRequest) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -245,10 +245,10 @@ func (o *V1CreateChannelRequest) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err
+		return err;
 	}
 
-	for _, requiredProperty := range requiredProperties {
+	for _, requiredProperty := range(requiredProperties) {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -313,3 +313,5 @@ func (v *NullableV1CreateChannelRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

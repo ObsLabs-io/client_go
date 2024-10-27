@@ -1,7 +1,7 @@
 /*
 ObsLabs API
 
-# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } }
+# Authentication  ObsLabs uses basic auth to authenticate the API. You can create API keys in the account settings. Use your API key as the basic auth password. The username should be left blank (notice the colon sign before api-key that must be included). All requests must be made over https.  Example usage: ```bash curl -u :<YOUR API KEY> https://api.obslabs.io/v1/users/me ```  # Errors  The API returns a structured error response in case of failure. Below is the format of the error response object:  ```json {   \"error\": {     \"status\": 400,     \"code\": \"VALIDATION\",     \"message\": \"Validation errors occurred.\",     \"details\": [       {         \"field\": \"email\",         \"issue\": \"The email address is not in a valid format.\"       },       {         \"field\": \"password\",         \"issue\": \"The password must be at least 8 characters long.\"       }     ]   } } 
 
 API version: 1.0
 Contact: contact@obslabs.io
@@ -20,12 +20,13 @@ import (
 	"strings"
 )
 
+
 // OrganizationsAPIService OrganizationsAPI service
 type OrganizationsAPIService service
 
 type ApiV1CreateOrganizationRequest struct {
-	ctx                         context.Context
-	ApiService                  *OrganizationsAPIService
+	ctx context.Context
+	ApiService *OrganizationsAPIService
 	v1CreateOrganizationRequest *V1CreateOrganizationRequest
 }
 
@@ -41,25 +42,24 @@ func (r ApiV1CreateOrganizationRequest) Execute() (*V1CreateOrganization201Respo
 /*
 V1CreateOrganization Create Organization
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiV1CreateOrganizationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiV1CreateOrganizationRequest
 */
 func (a *OrganizationsAPIService) V1CreateOrganization(ctx context.Context) ApiV1CreateOrganizationRequest {
 	return ApiV1CreateOrganizationRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateOrganization201Response
+//  @return V1CreateOrganization201Response
 func (a *OrganizationsAPIService) V1CreateOrganizationExecute(r ApiV1CreateOrganizationRequest) (*V1CreateOrganization201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateOrganization201Response
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateOrganization201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.V1CreateOrganization")
@@ -121,8 +121,8 @@ func (a *OrganizationsAPIService) V1CreateOrganizationExecute(r ApiV1CreateOrgan
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
@@ -132,8 +132,8 @@ func (a *OrganizationsAPIService) V1CreateOrganizationExecute(r ApiV1CreateOrgan
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -143,8 +143,8 @@ func (a *OrganizationsAPIService) V1CreateOrganizationExecute(r ApiV1CreateOrgan
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -162,9 +162,9 @@ func (a *OrganizationsAPIService) V1CreateOrganizationExecute(r ApiV1CreateOrgan
 }
 
 type ApiV1DeleteOrganizationRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *OrganizationsAPIService
-	oID        string
+	oID string
 }
 
 func (r ApiV1DeleteOrganizationRequest) Execute() (*http.Response, error) {
@@ -176,24 +176,24 @@ V1DeleteOrganization Delete Organization
 
 Delete Organization
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@return ApiV1DeleteOrganizationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @return ApiV1DeleteOrganizationRequest
 */
 func (a *OrganizationsAPIService) V1DeleteOrganization(ctx context.Context, oID string) ApiV1DeleteOrganizationRequest {
 	return ApiV1DeleteOrganizationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
+		ctx: ctx,
+		oID: oID,
 	}
 }
 
 // Execute executes the request
 func (a *OrganizationsAPIService) V1DeleteOrganizationExecute(r ApiV1DeleteOrganizationRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.V1DeleteOrganization")
@@ -254,8 +254,8 @@ func (a *OrganizationsAPIService) V1DeleteOrganizationExecute(r ApiV1DeleteOrgan
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -265,8 +265,8 @@ func (a *OrganizationsAPIService) V1DeleteOrganizationExecute(r ApiV1DeleteOrgan
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -276,8 +276,8 @@ func (a *OrganizationsAPIService) V1DeleteOrganizationExecute(r ApiV1DeleteOrgan
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -287,8 +287,8 @@ func (a *OrganizationsAPIService) V1DeleteOrganizationExecute(r ApiV1DeleteOrgan
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -297,9 +297,9 @@ func (a *OrganizationsAPIService) V1DeleteOrganizationExecute(r ApiV1DeleteOrgan
 }
 
 type ApiV1GetOrganizationRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *OrganizationsAPIService
-	oID        string
+	oID string
 }
 
 func (r ApiV1GetOrganizationRequest) Execute() (*V1CreateOrganization201Response, *http.Response, error) {
@@ -311,27 +311,26 @@ V1GetOrganization Get Organization
 
 Get Organization
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@return ApiV1GetOrganizationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @return ApiV1GetOrganizationRequest
 */
 func (a *OrganizationsAPIService) V1GetOrganization(ctx context.Context, oID string) ApiV1GetOrganizationRequest {
 	return ApiV1GetOrganizationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
+		ctx: ctx,
+		oID: oID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateOrganization201Response
+//  @return V1CreateOrganization201Response
 func (a *OrganizationsAPIService) V1GetOrganizationExecute(r ApiV1GetOrganizationRequest) (*V1CreateOrganization201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateOrganization201Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateOrganization201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.V1GetOrganization")
@@ -392,8 +391,8 @@ func (a *OrganizationsAPIService) V1GetOrganizationExecute(r ApiV1GetOrganizatio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -403,8 +402,8 @@ func (a *OrganizationsAPIService) V1GetOrganizationExecute(r ApiV1GetOrganizatio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -414,8 +413,8 @@ func (a *OrganizationsAPIService) V1GetOrganizationExecute(r ApiV1GetOrganizatio
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -433,7 +432,7 @@ func (a *OrganizationsAPIService) V1GetOrganizationExecute(r ApiV1GetOrganizatio
 }
 
 type ApiV1ListOrganizationsRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *OrganizationsAPIService
 }
 
@@ -444,25 +443,24 @@ func (r ApiV1ListOrganizationsRequest) Execute() (*V1ListOrganizations200Respons
 /*
 V1ListOrganizations List Organizations
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@return ApiV1ListOrganizationsRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiV1ListOrganizationsRequest
 */
 func (a *OrganizationsAPIService) V1ListOrganizations(ctx context.Context) ApiV1ListOrganizationsRequest {
 	return ApiV1ListOrganizationsRequest{
 		ApiService: a,
-		ctx:        ctx,
+		ctx: ctx,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1ListOrganizations200Response
+//  @return V1ListOrganizations200Response
 func (a *OrganizationsAPIService) V1ListOrganizationsExecute(r ApiV1ListOrganizationsRequest) (*V1ListOrganizations200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1ListOrganizations200Response
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1ListOrganizations200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.V1ListOrganizations")
@@ -522,8 +520,8 @@ func (a *OrganizationsAPIService) V1ListOrganizationsExecute(r ApiV1ListOrganiza
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -533,8 +531,8 @@ func (a *OrganizationsAPIService) V1ListOrganizationsExecute(r ApiV1ListOrganiza
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -552,10 +550,10 @@ func (a *OrganizationsAPIService) V1ListOrganizationsExecute(r ApiV1ListOrganiza
 }
 
 type ApiV1OrganizationMemberDeleteRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *OrganizationsAPIService
-	oID        string
-	uID        string
+	oID string
+	uID string
 }
 
 func (r ApiV1OrganizationMemberDeleteRequest) Execute() (*http.Response, error) {
@@ -567,26 +565,26 @@ V1OrganizationMemberDelete Delete Organization Memeber
 
 Delete Organization Member
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param uID User ID
-	@return ApiV1OrganizationMemberDeleteRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param uID User ID
+ @return ApiV1OrganizationMemberDeleteRequest
 */
 func (a *OrganizationsAPIService) V1OrganizationMemberDelete(ctx context.Context, oID string, uID string) ApiV1OrganizationMemberDeleteRequest {
 	return ApiV1OrganizationMemberDeleteRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		uID:        uID,
+		ctx: ctx,
+		oID: oID,
+		uID: uID,
 	}
 }
 
 // Execute executes the request
 func (a *OrganizationsAPIService) V1OrganizationMemberDeleteExecute(r ApiV1OrganizationMemberDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod = http.MethodDelete
-		localVarPostBody   interface{}
-		formFiles          []formFile
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.V1OrganizationMemberDelete")
@@ -648,8 +646,8 @@ func (a *OrganizationsAPIService) V1OrganizationMemberDeleteExecute(r ApiV1Organ
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -659,8 +657,8 @@ func (a *OrganizationsAPIService) V1OrganizationMemberDeleteExecute(r ApiV1Organ
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -670,8 +668,8 @@ func (a *OrganizationsAPIService) V1OrganizationMemberDeleteExecute(r ApiV1Organ
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -681,8 +679,8 @@ func (a *OrganizationsAPIService) V1OrganizationMemberDeleteExecute(r ApiV1Organ
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -691,10 +689,10 @@ func (a *OrganizationsAPIService) V1OrganizationMemberDeleteExecute(r ApiV1Organ
 }
 
 type ApiV1OrganizationMemberUpdateRequest struct {
-	ctx                               context.Context
-	ApiService                        *OrganizationsAPIService
-	oID                               string
-	uID                               string
+	ctx context.Context
+	ApiService *OrganizationsAPIService
+	oID string
+	uID string
 	v1OrganizationMemberUpdateRequest *V1OrganizationMemberUpdateRequest
 }
 
@@ -710,29 +708,28 @@ func (r ApiV1OrganizationMemberUpdateRequest) Execute() (*V1OrganizationMemberUp
 /*
 V1OrganizationMemberUpdate Update Organization Member
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@param uID User ID
-	@return ApiV1OrganizationMemberUpdateRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @param uID User ID
+ @return ApiV1OrganizationMemberUpdateRequest
 */
 func (a *OrganizationsAPIService) V1OrganizationMemberUpdate(ctx context.Context, oID string, uID string) ApiV1OrganizationMemberUpdateRequest {
 	return ApiV1OrganizationMemberUpdateRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
-		uID:        uID,
+		ctx: ctx,
+		oID: oID,
+		uID: uID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1OrganizationMemberUpdate200Response
+//  @return V1OrganizationMemberUpdate200Response
 func (a *OrganizationsAPIService) V1OrganizationMemberUpdateExecute(r ApiV1OrganizationMemberUpdateRequest) (*V1OrganizationMemberUpdate200Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPatch
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1OrganizationMemberUpdate200Response
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1OrganizationMemberUpdate200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.V1OrganizationMemberUpdate")
@@ -796,8 +793,8 @@ func (a *OrganizationsAPIService) V1OrganizationMemberUpdateExecute(r ApiV1Organ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -807,8 +804,8 @@ func (a *OrganizationsAPIService) V1OrganizationMemberUpdateExecute(r ApiV1Organ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -818,8 +815,8 @@ func (a *OrganizationsAPIService) V1OrganizationMemberUpdateExecute(r ApiV1Organ
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -837,9 +834,9 @@ func (a *OrganizationsAPIService) V1OrganizationMemberUpdateExecute(r ApiV1Organ
 }
 
 type ApiV1UpdateOrganizationRequest struct {
-	ctx                         context.Context
-	ApiService                  *OrganizationsAPIService
-	oID                         string
+	ctx context.Context
+	ApiService *OrganizationsAPIService
+	oID string
 	v1UpdateOrganizationRequest *V1UpdateOrganizationRequest
 }
 
@@ -857,27 +854,26 @@ V1UpdateOrganization Update Organization
 
 Update Organization
 
-	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param oID Organization ID
-	@return ApiV1UpdateOrganizationRequest
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param oID Organization ID
+ @return ApiV1UpdateOrganizationRequest
 */
 func (a *OrganizationsAPIService) V1UpdateOrganization(ctx context.Context, oID string) ApiV1UpdateOrganizationRequest {
 	return ApiV1UpdateOrganizationRequest{
 		ApiService: a,
-		ctx:        ctx,
-		oID:        oID,
+		ctx: ctx,
+		oID: oID,
 	}
 }
 
 // Execute executes the request
-//
-//	@return V1CreateOrganization201Response
+//  @return V1CreateOrganization201Response
 func (a *OrganizationsAPIService) V1UpdateOrganizationExecute(r ApiV1UpdateOrganizationRequest) (*V1CreateOrganization201Response, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPatch
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *V1CreateOrganization201Response
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *V1CreateOrganization201Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.V1UpdateOrganization")
@@ -940,8 +936,8 @@ func (a *OrganizationsAPIService) V1UpdateOrganizationExecute(r ApiV1UpdateOrgan
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
@@ -951,8 +947,8 @@ func (a *OrganizationsAPIService) V1UpdateOrganizationExecute(r ApiV1UpdateOrgan
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
@@ -962,8 +958,8 @@ func (a *OrganizationsAPIService) V1UpdateOrganizationExecute(r ApiV1UpdateOrgan
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 500 {
@@ -973,8 +969,8 @@ func (a *OrganizationsAPIService) V1UpdateOrganizationExecute(r ApiV1UpdateOrgan
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

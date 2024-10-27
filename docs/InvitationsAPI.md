@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[apiToken](../README.md#apiToken)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -143,7 +143,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[apiToken](../README.md#apiToken)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -213,7 +213,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[apiToken](../README.md#apiToken)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -286,7 +286,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[apiToken](../README.md#apiToken)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -355,7 +355,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[apiToken](../README.md#apiToken)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
@@ -427,7 +427,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[apiToken](../README.md#apiToken)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 

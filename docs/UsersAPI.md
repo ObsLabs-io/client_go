@@ -55,7 +55,7 @@ Other parameters are passed through a pointer to a apiV1MyUserRequest struct via
 
 ### Authorization
 
-[apiToken](../README.md#apiToken)
+[basicAuth](../README.md#basicAuth)
 
 ### HTTP request headers
 
